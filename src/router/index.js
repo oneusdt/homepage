@@ -10,6 +10,15 @@ const routes = [
     name: 'Home',
     component: () => import('../views/Home.vue'),
   },
+  {
+    path: '/crowd',
+    name: 'Crowd',
+    component: () => import('../views/Crowdfunding.vue'),
+  },
+  {
+    path: '*',
+    redirect: { name: 'Home' },
+  },
 ];
 
 const router = new VueRouter({

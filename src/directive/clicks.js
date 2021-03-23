@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import store from '../store';
+import { Message } from 'element-ui';
 
 Vue.directive('click1', {
   inserted: function(el, binding, vnode) {
@@ -8,7 +9,11 @@ Vue.directive('click1', {
 
     el.addEventListener('click', async () => {
       if (store.state.account == '') {
-        alert('请先登录钱包');
+        Message({
+          message: 'Please connect to a wallet ',
+          type: 'error',
+          duration: 2000,
+        });
       } else {
         cb();
       }

@@ -7,7 +7,7 @@
       <el-container>
         <router-view :key="$route.fullPath" />
       </el-container>
-      <Footer />
+      <Footer v-if="footerShow" />
     </el-container>
   </div>
 </template>
@@ -20,6 +20,16 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  data() {
+    return {
+      footerShow: false,
+    };
+  },
+  created() {
+    this.$router.onReady(() => {
+      this.footerShow = true;
+    });
   },
 };
 </script>

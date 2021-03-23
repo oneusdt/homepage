@@ -3,3 +3,123 @@
   padding: 5px 20px;
   box-sizing: content-box;
 }
+
+.customer-table th{
+  border:none;
+}
+.customer-table th, .customer-table tr {
+  background: #f2f0eb;
+}
+.customer-table .el-table__empty-block {
+  background: #f2f0eb;
+}
+.customer-table td,.customer-table th.is-leaf {
+border:none;
+}
+// 表格最外边框
+.el-table--border, .el-table--group{
+border: none;
+}
+// 头部边框
+.customer-table thead tr th.is-leaf{
+border: none;
+border-right: none;
+}
+.customer-table thead tr th:nth-last-of-type(2){
+border-right: none;
+}
+// 表格最外层边框-底部边框
+.el-table--border::after, .el-table--group::after{
+width: 0;
+}
+.customer-table::before{
+width: 0;
+}
+.customer-table .el-table__fixed-right::before,.el-table__fixed::before{
+width: 0;
+}
+// 表格有滚动时表格头边框
+.el-table--border th.gutter:last-of-type {
+  border: 1px solid #EBEEF5;  
+  border-left: none;
+}
+
+.el-tabs__item {
+  font-size: 16px;
+}
+.el-tabs__active-bar {
+  height: 3px;
+}
+
+// 自定义通知
+.custom-message {
+  font-size: 14px;
+  min-width: 200px;
+  padding: 10px 16px;
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+.loading-icon {
+  width: 20px;
+  height: 20px;
+  background: url('../assets/images/loading.png') no-repeat;
+  background-size: 100%;
+  margin-right: 10px;
+}
+@keyframes loadingCircle {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.animate-loading {
+  animation: loadingCircle 1s linear infinite;
+}
+.el-message .el-icon-error {
+  font-size: 16px;
+}
+.el-message__content {
+  line-height: inherit;
+}
+.notify-a {
+  margin-left: 2px;
+  &:hover {
+    text-decoration: underline;
+    color: #4caf50;
+  }
+}
+
+.el-loading-spinner .el-loading-text {
+   font-size: 16px;
+    color: #fff;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.h-skeleton,.m-skeleton  {
+  padding: 0;
+}
+.s-skeleton .van-skeleton__row {
+    height: 18px;
+}
+// 骨架屏分为正常 高
+.m-skeleton .van-skeleton__row {
+    height: 32px;
+}
+//高一点的
+.h-skeleton .van-skeleton__row {
+    height: 60px;
+}
+.one-line-skeleton .van-skeleton__row{
+   width: 100% !important;
+   
+}
+
+@media only screen and (max-width: 767px) {
+  .custom-message {
+    min-width: calc(100vw - 36px);
+  }
+  .m-skeleton .van-skeleton__row {
+    height: 18px;
+}
+}

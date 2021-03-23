@@ -87,7 +87,6 @@ export async function connect() {
   }
 }
 
-// 呼气面版
 export async function requestPermissions() {
   if (typeof window.ethereum !== 'undefined') {
     const permissions = await window.ethereum
@@ -111,7 +110,6 @@ export async function requestPermissions() {
   return false;
 }
 
-// 监听用户切换
 
 export default {
   checkProvider,

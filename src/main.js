@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/display.css';
 import './App.less';
 import './directive';
 import { Skeleton } from 'vant';
+import './utils/date';
 
 Vue.use(Skeleton);
 Vue.use(ElementUI);

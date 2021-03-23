@@ -10,7 +10,7 @@
         <p class="hidden-sm-and-up">
           A defi factory on Binance Smart Chain that produces defi-project in a yield farming way
         </p>
-        <div class="banner-btn">Crowdfunding</div>
+        <a href="/crowd"><div class="banner-btn">Crowdfunding</div></a>
       </div>
       <div class="banner-bg" />
     </div>
@@ -195,7 +195,7 @@ export default {
     font-size: 36px;
   }
   .section-1 {
-    padding: 16px;
+    padding: 45px 30px;
     .section-1-con {
       padding: 16px;
     }
@@ -244,6 +244,12 @@ export default {
   }
   .token-wrap {
     padding: 50px 16px;
+  }
+  .section-1 {
+    padding: 32px 16px;
+  }
+  .timeline-article .content-box {
+    font-size: 13px;
   }
 }
 @media (min-width: 992px) {

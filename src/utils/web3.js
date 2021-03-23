@@ -1,11 +1,11 @@
 // import Web3 from 'web3';
 const Web3 = require('web3');
 import store from '../store/index';
-import detectEthereumProvider from '@metamask/detect-provider';
+// import detectEthereumProvider from '@metamask/detect-provider';
 
 async function init() {
-  const provider = await detectEthereumProvider();
-  if (provider) {
+  // const provider = await detectEthereumProvider();
+  if (window.web3) {
     //Metamask 把它的 web3 提供者注入到浏览器的全局 JavaScript对象web3中
     // Metamask 默认使用 Infura 的服务器做为 web3 提供者
     window.web3js = new Web3(window.web3.currentProvider);
@@ -23,6 +23,7 @@ async function init() {
   } else {
     store.dispatch('changeLoaded', true);
     store.state.enthume = false;
+    window.web3js = new Web3(new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545/'))
     console.log('Please install MetaMask!');
   }
 }

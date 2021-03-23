@@ -105,3 +105,38 @@ input[type='number'] {
 
 //全局变量
 @themeColor:#31c77f;
+
+
+// loading动画
+@-webkit-keyframes woo-spinner-_-rotate {
+  to {
+    -webkit-transform: translateZ(0);
+    -webkit-transform: rotate(1turn);
+    transform: translateZ(0);
+    transform: rotate(1turn);
+  }
+}
+@keyframes woo-spinner-_-rotate {
+  to {
+    -webkit-transform: translateZ(0);
+    -webkit-transform: rotate(1turn);
+    transform: translateZ(0);
+    transform: rotate(1turn);
+  }
+}
+@keyframes woo-spinner-_-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -30px;
+  }
+  to {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -120px;
+  }
+}

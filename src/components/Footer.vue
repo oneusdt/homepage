@@ -4,17 +4,17 @@
       <img src="https://img.bee-cdn.com/large/3b9ae203lz1gosu29cz4cj201701bq2r.jpg" />
       <div class="info">
         <div class="join">JOIN US</div>
-        <div>Email: hanshaton@turtledex.io</div>
-        <div>Phone: 101093209302</div>
+        <div>Email: team@fork-finance.org</div>
+        <div>HR: hr@fork-finance.org</div>
       </div>
     </div>
     <div class="footer-right">
       <ul class="footer-icon-list">
-        <li class="icon twitter"></li>
-        <li class="icon telegram"></li>
-        <li class="icon med"></li>
-        <li class="icon discord"></li>
-        <li class="icon file"></li>
+        <a href="https://twitter.com/ForkFinance"><li class="icon twitter"></li></a>
+        <!-- <li class="icon telegram"></li> -->
+        <a href=" https://fork-finance.medium.com/"> <li class="icon med"></li></a>
+        <a href="https://discord.gg/NkV5SPgyJF"> <li class="icon discord"></li></a>
+        <a href="https://github.com/fork-finance"> <li class="icon github"></li></a>
       </ul>
     </div>
   </div>
@@ -78,8 +78,8 @@
   background: url('../assets/images/discord.png') no-repeat;
   background-size: 100% 100%;
 }
-.file {
-  background: url('../assets/images/file.png') no-repeat;
+.github {
+  background: url('https://github.githubassets.com/pinned-octocat.svg') no-repeat;
   background-size: 100% 100%;
 }
 
