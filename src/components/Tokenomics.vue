@@ -127,7 +127,7 @@ export default {
 }
 .box {
   width: 600px;
-  height: 400px;
+  // height: 400px;
   background: #fff;
   overflow: hidden;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);

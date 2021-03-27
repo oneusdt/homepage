@@ -9,7 +9,7 @@
         <div class="horizontal-menu">
           <div class="arrow-left" @click="prevs"></div>
           <div class="menu-wrapper">
-            <div class="menu-wrapper-inner" id="scroll">
+            <div class="menu-wrapper-inner" :id="'scroll'">
               <div class="menu-item-wrapper " style="display:inline-block" role="button">
                 <div class="timeline-article timeline-article-top menu-item ">
                   <div class="content-date"><span>Q4 2020</span></div>
@@ -131,7 +131,7 @@
               </div>
             </div>
           </div>
-          <div class="arrow-right" @click="next"></div>
+          <div class="arrow-right " @click="next"></div>
         </div>
       </div>
       <div class="timeline-end" />
@@ -143,6 +143,7 @@ export default {
   name: 'RoadMap',
   data() {
     return {
+      clientWidth: 0,
       prev: {
         x: 0,
         y: 0,
@@ -154,6 +155,7 @@ export default {
   },
   mounted() {
     const body = document.getElementById('scroll');
+    this.getWidth();
     body.addEventListener('mousedown', this.mouseStart);
     body.addEventListener('touchstart', this.touchStart);
     body.addEventListener('touchmove', this.touchMove);
@@ -165,6 +167,9 @@ export default {
     body.removeEventListener('touchmove', this.touchMove);
   },
   methods: {
+    getWidth() {
+      this.clientWidth = document.body.clientWidth;
+    },
     mouseStart(e) {
       this.startPos = {
         x: e.x,
@@ -416,6 +421,9 @@ h2 {
 @media (max-width: 767px) {
   h2 {
     font-size: 30px;
+  }
+  .menu-wrapper {
+    overflow: scroll;
   }
   .timeline-start,
   .timeline-end {
