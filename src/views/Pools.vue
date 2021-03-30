@@ -31,12 +31,12 @@
           <div class="progress-title">Progress</div>
           <el-progress
             :stroke-width="8"
-            :percentage="Math.floor(item.sold / item.cap)"
+            :percentage="Math.floor((item.sold / item.cap) * 100)"
             status="success"
             :show-text="false"
             color="#ffc107"
           ></el-progress>
-          <span class="percent">{{ Math.floor(item.sold / item.cap) }}%</span>
+          <span class="percent">{{ Math.floor((item.sold / item.cap) * 100) }}%</span>
           <div class="flex access">
             <span>Access Type</span>
             <span> <span class="public-icon"></span> <span>Public</span></span>
@@ -154,7 +154,6 @@ export default {
       contracts,
       poolLength: 0,
       list: [],
-      percentage: 100,
       status: ['waiting', 'starting', 'finshed'],
     };
   },
@@ -190,12 +189,13 @@ export default {
         await contract.call('sellPool', i, function(err, res) {
           if (!err) {
             res.cap = web3js.utils.fromWei(res.cap, 'ether');
+            res.sold = web3js.utils.fromWei(res.sold, 'ether');
             arr.push(res);
           }
         });
       }
       const currentTime = await this.getCurrentTime();
-      console.log(currentTime, 'curr')
+      console.log(currentTime, 'curr');
       arr = arr.map(item => {
         item.currentTime = currentTime;
         if (item.currentTime <= item.startTime) {
