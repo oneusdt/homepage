@@ -96,6 +96,13 @@ width: 0;
     margin: 0 auto;
 }
 
+.van-skeleton__row {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 16px;
+}
+.van-skeleton__row:not(:first-child) {
+  margin-top: 14px;
+}
 .h-skeleton,.m-skeleton  {
   padding: 0;
 }
@@ -104,7 +111,7 @@ width: 0;
 }
 // 骨架屏分为正常 高
 .m-skeleton .van-skeleton__row {
-    height: 32px;
+    height: 16px;
 }
 //高一点的
 .h-skeleton .van-skeleton__row {
@@ -115,11 +122,12 @@ width: 0;
    
 }
 
+
 @media only screen and (max-width: 767px) {
   .custom-message {
     min-width: calc(100vw - 36px);
   }
   .m-skeleton .van-skeleton__row {
-    height: 18px;
+    height: 16px;
 }
 }

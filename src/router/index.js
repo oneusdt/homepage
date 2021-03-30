@@ -11,6 +11,16 @@ const routes = [
     component: () => import('../views/Home.vue'),
   },
   {
+    path: '/pools',
+    name: 'Pools',
+    component: () => import('../views/Pools.vue'),
+  },
+  {
+    path: '/pools/:index',
+    name: 'Crowds',
+    component: () => import('../views/Crowdfunding.vue'),
+  },
+  {
     path: '/crowd',
     name: 'Crowd',
     component: () => import('../views/Crowdfunding.vue'),

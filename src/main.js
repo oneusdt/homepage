@@ -8,11 +8,15 @@ import './App.less';
 import './directive';
 import { Skeleton } from 'vant';
 import './utils/date';
+// import Vconsole from 'vconsole';
 
 Vue.use(Skeleton);
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
+
+// new Vconsole();
+
 
 new Vue({
   router,

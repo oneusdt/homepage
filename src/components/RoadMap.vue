@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Roadmap</h2>
+    <h2>Roadmap1</h2>
     <div class="main-time-line">
       <div class="timeline-start" />
       <div class="conference-center-line"></div>
@@ -8,7 +8,7 @@
       <div class="timeline-content">
         <div class="horizontal-menu">
           <div class="arrow-left" @click="prevs"></div>
-          <div class="menu-wrapper">
+          <div class="menu-wrapper" id="scroll-wrap">
             <div class="menu-wrapper-inner" :id="'scroll'">
               <div class="menu-item-wrapper " style="display:inline-block" role="button">
                 <div class="timeline-article timeline-article-top menu-item ">
@@ -154,17 +154,17 @@ export default {
     };
   },
   mounted() {
-    const body = document.getElementById('scroll');
+    const scoller = document.getElementById('scroll-wrap');
     this.getWidth();
-    body.addEventListener('mousedown', this.mouseStart);
-    body.addEventListener('touchstart', this.touchStart);
-    body.addEventListener('touchmove', this.touchMove);
+    scoller.addEventListener('mousedown', this.mouseStart);
+    scoller.addEventListener('touchstart', this.touchStart);
+    // body.addEventListener('touchmove', this.touchMove);
   },
   beforeDestroy() {
-    const body = document.getElementById('scroll');
-    body.removeEventListener('mousedown', this.mouseStart);
-    body.removeEventListener('touchstart', this.touchStart);
-    body.removeEventListener('touchmove', this.touchMove);
+    const scoller = document.getElementById('scroll-wrap');
+    scoller.removeEventListener('mousedown', this.mouseStart);
+    scoller.removeEventListener('touchstart', this.touchStart);
+    // body.removeEventListener('touchmove', this.touchMove);
   },
   methods: {
     getWidth() {
@@ -178,8 +178,9 @@ export default {
       };
       const body = document.getElementById('scroll');
       body.style.transition = 'none';
-      body.addEventListener('mousemove', this.mouseMove);
-      body.addEventListener('mouseup', this.touchEnd);
+      const scroller = document.getElementById('scroll-wrap');
+      scroller.addEventListener('mousemove', this.mouseMove);
+      scroller.addEventListener('mouseup', this.touchEnd);
     },
     mouseMove(event) {
       event.preventDefault();
@@ -199,11 +200,13 @@ export default {
         y: e.touches[0].pageY,
         t: new Date(),
       };
+      const scoller = document.getElementById('scroll-wrap');
+      scoller.addEventListener('touchmove', this.touchMove);
+      scoller.addEventListener('touchend', this.touchEnd);
       const body = document.getElementById('scroll');
       body.style.transition = 'none';
-      body.addEventListener('touchend', this.touchEnd);
     },
-    touchMove() {
+    touchMove(event) {
       event.preventDefault();
       //   //当屏幕有多个touch或者页面被缩放过，就不执行move操作
       if (event.targetTouches.length > 1 || (event.scale && event.scale !== 1)) return;
@@ -235,8 +238,11 @@ export default {
         body.style.transform = `translate3d(${-maxWidth}px, 0px, 0px)`;
       }
       this.prev = this.endPos;
-      body.removeEventListener('touchend', this.touchEnd);
-      body.removeEventListener('mousemove', this.mouseMove);
+      const scoller = document.getElementById('scroll-wrap');
+      scoller.removeEventListener('touchmove', this.touchMove);
+      scoller.removeEventListener('touchend', this.touchEnd);
+      scoller.removeEventListener('mousemove', this.mouseMove);
+      scoller.removeEventListener('mouseup', this.touchEnd);
     },
 
     prevs() {
@@ -335,6 +341,7 @@ h2 {
 }
 .menu-item-wrapper {
   max-width: 300px;
+  padding-right: 10px;
 }
 .menu-wrapper-inner {
   white-space: nowrap;
@@ -343,7 +350,7 @@ h2 {
 }
 .menu-item {
   width: 300px;
-  margin: 5px 10px;
+  margin: 5px 0px;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -370,7 +377,7 @@ h2 {
 }
 .timeline-article .content-box {
   position: relative;
-  padding: 15px 10px;
+  padding: 15px 0px;
   text-align: left;
   margin-top: 40px;
   max-height: 200px;
@@ -401,7 +408,7 @@ h2 {
   left: 10%;
   top: 50%;
   margin-top: -15px;
-  margin-left: -40px;
+  margin-left: -70px;
   cursor: pointer;
 }
 .arrow-right {
@@ -413,7 +420,7 @@ h2 {
   right: 10%;
   top: 50%;
   margin-top: -15px;
-  margin-right: -40px;
+  margin-right: -70px;
   cursor: pointer;
 }
 @media (max-width: 991px) {
@@ -421,9 +428,6 @@ h2 {
 @media (max-width: 767px) {
   h2 {
     font-size: 30px;
-  }
-  .menu-wrapper {
-    overflow: scroll;
   }
   .timeline-start,
   .timeline-end {
@@ -439,6 +443,12 @@ h2 {
   }
   .horizontal-menu {
     top: -52px;
+  }
+  .arrow-left {
+    margin-left: -40px;
+  }
+  .arrow-right {
+    margin-right: -40px;
   }
 }
 @media (min-width: 992px) {

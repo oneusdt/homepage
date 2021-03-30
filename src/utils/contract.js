@@ -7,10 +7,11 @@ class Contract {
   }
   // 支持调用call 函数方法传递多个参数 methodParms为字符串或数组
   call(method, methodParms, ...args) {
-    if (methodParms) {
+    if (methodParms !== undefined && methodParms !== false) {
       if (Array.isArray(methodParms)) {
         return this.contract.methods[method](...methodParms).call(...args);
       }
+      console.log(method, methodParms, 'call')
       return this.contract.methods[method](methodParms).call(...args);
     }
     return this.contract.methods[method]().call(...args);

@@ -12,7 +12,10 @@
         <h3 class="title">Depoist Fork Tokens</h3>
       </span>
       <van-skeleton :row="3" class="m-skeleton" :loading="account == '' || skeletonLoading">
-        <p class="over">{{ maxVal == 0 ? 0 : Number(maxVal).toFixed(4) }} BNB Availbe</p>
+        <p class="over">
+          You have {{ maxVal == 0 ? 0 : Number(total).toFixed(3) }} BNB Availbe, can also deposit
+          {{ Number(maxVal).toFixed(2) }} BNB
+        </p>
         <el-input
           placeholder="please input amount"
           class="input"
@@ -23,7 +26,9 @@
         >
           <el-button slot="suffix" type="primary" class="max" size="small" @click="changMax">Max</el-button>
         </el-input>
-        <p class="over margin-t-10" v-show="val">you will receive {{ (Number(val) * 282).toFixed(4) }} Fork Availbe</p>
+        <p class="over margin-t-10" v-show="val">
+          you will receive {{ (Number(val) * this.price).toFixed(4) }} Fork Availbe
+        </p>
       </van-skeleton>
       <span slot="footer" class="dialog-footer">
         <el-button @click="canel" round size="medium">cancle</el-button>
@@ -40,6 +45,9 @@ import { common } from '@/utils/common';
 export default {
   name: 'Model',
   props: {
+    maxVal: [Number, String],
+    price: [Number, String],
+    index: [Number, String],
     visable: Boolean,
     onOk: Function,
     onCanel: Function,
@@ -48,7 +56,7 @@ export default {
   data() {
     return {
       val: '',
-      maxVal: 0,
+      total: 0,
       status: 1, //bnb dont need approve
       contracts,
       skeletonLoading: true,
@@ -95,11 +103,11 @@ export default {
     },
   },
   methods: {
-    // 获取余额
+    // getbalance user
     async getBalance() {
       try {
         const res = await web3js.eth.getBalance(this.account);
-        this.maxVal = Number(web3js.utils.fromWei(res, 'ether'));
+        this.total = Number(web3js.utils.fromWei(res, 'ether'));
         this.skeletonLoading = false;
       } catch (err) {
         this.skeletonLoading = true;
@@ -111,18 +119,20 @@ export default {
         });
       }
     },
-    // 只有send交易需要这个
+    // deposit
     async deposit(callback) {
       const current = this.contracts[`MoonFund`];
       const amount = web3js.utils.toWei(String(this.val), 'ether');
       const contract = new Contract(current.abi, current.address, current.name);
       const params = { from: this.account, value: amount };
-      return contract.send('deposit', amount, params, function(err, res) {
+      console.log(params, 'params');
+      return contract.send('deposit', [this.index, amount], params, function(err, res) {
         if (!err) {
           callback(res);
         }
       });
     },
+    // sure transtion
     async confirm() {
       if (this.status == 0) {
         return this.approve();
@@ -144,12 +154,14 @@ export default {
         } else {
           localStorage.setItem('fundraisingData', JSON.stringify(arr));
         }
-        this.maxVal = Number(this.maxVal) - Number(this.val);
+        // this.maxVal = Number(this.maxVal) - Number(this.val);
+        this.$emit('changeMax', Number(this.maxVal) - Number(this.val));
+        this.total = Number(this.total) - Number(this.val);
         this.val = '';
       }
       this.sendLoading = false;
     },
-    // 交易需要先进行授权 暂时不需要
+    // approve acoount
     async approve() {
       this.sendLoading = true;
       let res = await common(this.approveFn);
@@ -171,7 +183,7 @@ export default {
         }
       });
     },
-    // 查询合约允许的值 暂时不需要
+    // checkallowance
     async allowance() {
       if (this.tokenName == 'BNB' && this.type == 'Deposit') {
         if (this.account) {
@@ -201,7 +213,7 @@ export default {
         });
       }
     },
-    // 检测合约是否已经授权过了 暂时不需要
+    // checkallow
     async checkAllowance() {
       const approveVal = await this.allowance();
       if (approveVal == 0 || !approveVal) {
@@ -252,12 +264,12 @@ export default {
   width: 100%;
   height: 100%;
   background: transparent;
-  color: #4caf50;
+  color: #03a9f4;
   border: none;
   font-size: 16px;
   border-left: 1px solid #e5e7eb;
   &:hover {
-    color: #57d493;
+    color: #2196f3;
     background: transparent;
     border-color: #e5e7eb;
   }

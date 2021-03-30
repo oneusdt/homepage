@@ -1,7 +1,10 @@
 <template>
   <span>
-    <span class="time" v-show="time !== ''">{{ formatTimeStamp(time) }}</span>
-    <span class="time" v-show="time == '' || time < 1000">waiting</span>
+    <span class="time">
+      <span class="span">{{ hours }}</span> : <span class="span">{{ minutes }}</span> :
+      <span class="span">{{ seconds }}</span>
+    </span>
+    <!-- <span class="time" v-show="time == '' || time < 1000">waiting</span> -->
   </span>
 </template>
 <script>
@@ -19,6 +22,9 @@ export default {
       load: false,
       timeOff: 0,
       lastTime: 0, // 记录上一次的时间戳
+      hours: '00',
+      seconds: '00',
+      minutes: '00',
     };
   },
 
@@ -28,6 +34,7 @@ export default {
   created() {
     this.timeOff = new Date().getTime() - this.startTime; //本地时间与区块时间间隔
     this.fetchData();
+    this.updateTime();
   },
 
   methods: {
@@ -78,32 +85,49 @@ export default {
       }
       const timestamp = end_time - current_time - gap;
       this.time = timestamp;
-      this.changeTime(this.time);
+      this.formatTimeStamp(this.time);
+      this.changeTime && this.changeTime(this.time);
       this.load = true;
     },
     formatTimeStamp(ms) {
-      let days = parseInt(ms / (1000 * 60 * 60 * 24)),
-        hours =
-          parseInt(ms / (1000 * 60 * 60)) >= 24
-            ? parseInt(parseInt(ms / 1000 / 60) / 60) % 24
-            : parseInt(ms / (1000 * 60 * 60)),
+      if (ms <= 0) {
+        this.hours = '00';
+        this.minutes = '00';
+        this.seconds = '00';
+        return false;
+      }
+      // let days = parseInt(ms / (1000 * 60 * 60 * 24)),
+      let hours = parseInt(ms / (1000 * 60 * 60)),
         minutes = parseInt((ms % (1000 * 60 * 60)) / (1000 * 60)),
         seconds = parseInt((ms % (1000 * 60)) / 1000);
       hours = hours < 10 ? '0' + hours : hours;
       minutes = minutes < 10 ? '0' + minutes : minutes;
       seconds = seconds < 10 ? '0' + seconds : seconds;
-      return `${days}:${hours}:${minutes}:${seconds}`;
+
+      this.hours - hours;
+      this.minutes = minutes;
+      this.seconds = seconds;
+      // return `<span>${days}</span> : <span>${hours}</span> : <span>${minutes}</span> : <span>${seconds}</span>`;
     },
   },
 };
 </script>
 <style lang="less" scoped>
 .time {
-  font-size: 16px;
-  margin-left: 20px;
-  background-color: #fdf6ec;
-  border-color: #faecd8;
-  color: #e6a23c;
-  padding: 0 10px;
+  // padding: 0 10px;
+  margin-top: 4px;
+  display: inline-block;
+  min-width: 102px;
+  .span {
+    background: #f2f0eb;
+    color: #22292f;
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+}
+@media (max-width: 767px) {
+  .time {
+    font-size: 14px;
+  }
 }
 </style>

@@ -58,7 +58,7 @@
         <div class="wallet-account">
           <div class="line-1">
             <span>Connected with {{ wallet }}</span>
-            <el-button type="success" size="mini" plain @click="changeAccount">change</el-button>
+            <el-button type="primary" size="mini" plain @click="changeAccount">change</el-button>
           </div>
           <div class="line-2">
             <p>{{ plusXing(account) }}</p>

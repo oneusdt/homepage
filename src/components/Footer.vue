@@ -66,12 +66,8 @@
   background: url('../assets/images/twitter.png') no-repeat;
   background-size: 100% 100%;
 }
-.telegram {
-  background: url('../assets/images/telegram.png') no-repeat;
-  background-size: 100% 100%;
-}
 .med {
-  background: url('../assets/images/med.png') no-repeat;
+  background: url('../assets/images/medium.png') no-repeat;
   background-size: 100% 100%;
 }
 .discord {
@@ -79,7 +75,7 @@
   background-size: 100% 100%;
 }
 .github {
-  background: url('https://github.githubassets.com/pinned-octocat.svg') no-repeat;
+  background: url('../assets/images/github.png') no-repeat;
   background-size: 100% 100%;
 }
 
