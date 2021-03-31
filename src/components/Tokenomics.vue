@@ -17,22 +17,18 @@
       <div class="box" v-show="activeIndex == 0">
         <div class="text">
           <div class="title">{{ menu[0] }}</div>
-          <div>Total supply : 188.000.000 $FROK</div>
-          <div>15% To the moon Found (2.82 millions)</div>
+          <div>Total supply : 188,000,000 $FROK</div>
+          <div>4% To the moon Found (0.752 millions)</div>
           <div>10% Development found (1.88 millions)</div>
           <div>4% Warchest (0.8 millions)</div>
-          <div>71% Fair launch distribution (13.348 millions)</div>
+          <div>82% Fair launch distribution (15.368 millions)</div>
         </div>
         <div class="icon icon-money" />
       </div>
       <div class="box" v-show="activeIndex == 1">
         <div class="text">
           <div class="title">{{ menu[1] }}</div>
-          <div>Rate : 282 $FORK = 1 BNB</div>
-          <div>Hard Cap: 10 000 BNB (2.82 millions $FORK)</div>
-          <div>Total Supply : 18.8 millions $FORK, Private Sale is 15% of total supply</div>
-          <div>Starting date: 25th of March 2021 at 12:00:00 UTC</div>
-          <div>Minimal investment value : 0.01 BNB</div>
+          <div>The $FORK of 0.752million(4%) raised 2100 BNB in three installments, and the funds were directly injected into the Moon Fund. More details can be found in the documentation</div>
         </div>
         <div class="icon icon-develop" />
       </div>
