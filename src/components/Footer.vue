@@ -11,9 +11,9 @@
     <div class="footer-right">
       <ul class="footer-icon-list">
         <a href="https://twitter.com/ForkFinance"><li class="icon twitter"></li></a>
-        <!-- <li class="icon telegram"></li> -->
+        <a href="https://t.me/forkfinance"> <li class="icon telegram"></li></a>
         <a href=" https://fork-finance.medium.com/"> <li class="icon med"></li></a>
-        <a href="https://discord.gg/NkV5SPgyJF"> <li class="icon discord"></li></a>
+        <!-- <a href="https://discord.gg/NkV5SPgyJF"> <li class="icon discord"></li></a> -->
         <a href="https://github.com/fork-finance"> <li class="icon github"></li></a>
       </ul>
     </div>
@@ -76,6 +76,10 @@
 }
 .github {
   background: url('../assets/images/github.png') no-repeat;
+  background-size: 100% 100%;
+}
+.telegram {
+  background: url('../assets/images/telegram.png') no-repeat;
   background-size: 100% 100%;
 }
 
