@@ -46,10 +46,12 @@
           </van-skeleton>
         </div>
         <div class="btn-group">
-          <div class="btn disable" v-click1="join">JOIN POOL</div>
-          <div class="btn default">
-            <a :href="`https://bscscan.com/address/${contracts.MoonFund.address}`" target="_blank">View BSC</a>
-          </div>
+          <el-button type="primary" class="btn" :disabled="!account || !white" v-click1="join" round
+            >Enter POOL</el-button
+          >
+          <a :href="`https://bscscan.com/address/${contracts.MoonFund.address}`" target="_blank">
+            <el-button type="info" round>View BSC</el-button>
+          </a>
         </div>
         <div
           class="pool-card tabs"
@@ -204,6 +206,13 @@ export default {
       this.getBalance();
     }
   },
+  watch: {
+    account(v) {
+      if (v) {
+        this.geBalance();
+      }
+    },
+  },
   computed: {
     fundraisingData() {
       const tableData = localStorage.getItem('fundraisingData');
@@ -221,22 +230,6 @@ export default {
     },
     index() {
       return this.$route.params.index;
-    },
-  },
-  watch: {
-    account(v) {
-      if (v) {
-        if (this.chainId == 56 || this.chainId == 97) {
-          this.getBalance();
-        }
-      }
-    },
-    chainId(v) {
-      if (v == 56 || v == 97) {
-        if (this.account) {
-          this.getBalance();
-        }
-      }
     },
   },
   methods: {
@@ -424,22 +417,31 @@ export default {
 }
 .btn-group {
   margin: 30px;
+  display: flex;
+  justify-content: center;
   .btn {
-    width: 128px;
-    height: 48px;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 48px;
-    border-radius: 24px;
-    display: inline-block;
-    cursor: pointer;
-    color: #22292f;
+    margin-right: 30px;
   }
-  .disable {
-    color: #fff;
-    background: #999;
-    box-shadow: 0 4px 20px 0 rgba(153, 153, 153, 30%);
-  }
+  // .btn {
+  //   width: 128px;
+  //   height: 48px;
+  //   font-size: 16px;
+  //   font-weight: 600;
+  //   line-height: 48px;
+  //   border-radius: 24px;
+  //   display: inline-block;
+  //   cursor: pointer;
+  //   color: #22292f;
+  // }
+  // .disable {
+  //   color: #fff;
+  //   background: #03a9f4;
+  //   box-shadow: 0 4px 20px 0 rgba(153, 153, 153, 30%);
+  //   &:hover {
+  //     background: #66b1ff;
+  //     border-color: #66b1ff;
+  //   }
+  // }
   .default {
     background: #f2f0eb;
     margin-left: 30px;
@@ -481,6 +483,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: 0;
+    align-items: center;
   }
   .pool-table tr th {
     font-size: 14px;
@@ -564,6 +567,9 @@ export default {
   .table-box .pool-table tr td span:last-child {
     text-align: right;
     color: #22292f;
+    white-space: break-spaces;
+    word-break: break-word;
+    line-height: 20px;
   }
   .not-found {
     p {
