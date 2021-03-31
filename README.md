@@ -29,7 +29,7 @@ npm run lint
 ```
 tar -cvf homepage.tar -C ./fork-homepage ./
 chmod +x ./deploy.sh
-./deploy.sh
+./deploy.sh ./homepage.tar
 ```
 
 ## License
