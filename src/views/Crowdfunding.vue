@@ -2,7 +2,7 @@
   <div class="crowd-wrap">
     <div class="crowd" v-if="!unusual">
       <div class="top">
-        <h2>MATTER Private Pool</h2>
+        <h2>{{card.title}} Private Pool</h2>
         <p>
           0x4F7d4aCF1A2d92C5b64a7365e3cD2185c91F9e40
           <span @click="copy">
@@ -19,7 +19,7 @@
             <div class="flex">
               <span>Swap Amount</span><span v-if="account && whilte">Credit remaining {{ BNB }} BNB</span>
             </div>
-            <div class="title">{{ Math.floor(card.cap / card.price) }} MATTER</div>
+            <div class="title">{{ Math.floor(card.cap / card.price) }} BNB</div>
             <div class="finshed">
               <span :class="[{ start: card.status == 1, finshed: card.status == 2, waiting: card.status == 0 }]">{{
                 status[card.status]
@@ -41,13 +41,13 @@
             ></el-progress>
             <div class="flex percen">
               <span>{{ Math.floor((card.sold / card.cap) * 100) }}%</span
-              ><span>{{ Math.floor(card.sold / card.price) }}/{{ Math.floor(card.cap / card.price) }} MATTER</span>
+              ><span>{{ card.sold }}/{{ card.cap }} FORK</span>
             </div>
           </van-skeleton>
         </div>
         <div class="btn-group">
           <div class="btn disable" v-click1="join">JOIN POOL</div>
-          <div class="btn default"><a href="https://bscscan.com/" target="_blank">View BSC</a></div>
+          <div class="btn default"><a :href="`https://bscscan.com/address/${contracts.MoonFund.address}`" target="_blank">View BSC</a></div>
         </div>
         <div
           class="pool-card tabs"
@@ -83,17 +83,22 @@
             <tbody>
               <tr>
                 <td>
-                  <p><span>Token Distribution</span><span>February 27th 2021, 9:30PM SGT</span></p>
+                  <p><span>Name</span><span>{{card.title}}</span></p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><span>Allocation(Min)-Allocation(Max)</span><span>0-6.6 HT</span></p>
+                  <p><span>Token Distribution</span><span>{{card.utcString}}</span></p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><span>Min Swap Level</span><span>833 HT</span></p>
+                  <p><span>Allocation(Min)-Allocation(Max)</span><span>0-5 BNB</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p><span>Hard Cap</span><span>{{ Math.floor(card.cap / card.price) }} BNB</span></p>
                 </td>
               </tr>
             </tbody>
@@ -107,17 +112,22 @@
             <tbody>
               <tr>
                 <td>
-                  <p><span>Token Distribution</span><span>February 27th 2021, 9:30PM SGT</span></p>
+                  <p><span>Name</span><span>Fork Token</span></p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><span>Allocation(Min)-Allocation(Max)</span><span>0-6.6 HT</span></p>
+                  <p><span>Symbol</span><span>FORK</span></p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><span>Min Swap Level</span><span>833 HT</span></p>
+                  <p><span>Address</span><span>{{contracts.Fork.address}}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p><span>Total Supply</span><span>18,800,000.00</span></p>
                 </td>
               </tr>
             </tbody>
@@ -246,6 +256,7 @@ export default {
           obj.timestamp = (obj.endTime - obj.currentTime) * 1000;
           obj.status = 1;
         }
+        obj.utcString = (new Date(obj.startTime*1000)).toUTCString();
         this.card = obj;
         this.skeletonLoading = false;
       } catch {

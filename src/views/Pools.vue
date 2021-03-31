@@ -5,7 +5,7 @@
         <el-card class="box-card">
           <div class="flex">
             <div class="name">
-              <img src="https://i.loli.net/2021/03/29/aZncSQp7CuEBy5x.png" />
+              <img :src="item.logoUrl" />
               <span>{{ item.title }}</span>
             </div>
             <div class="time">
@@ -39,7 +39,7 @@
           <span class="percent">{{ Math.floor((item.sold / item.cap) * 100) }}%</span>
           <div class="flex access">
             <span>Access Type</span>
-            <span> <span class="public-icon"></span> <span>Public</span></span>
+            <span> <span class="public-icon"></span> <span>Private</span></span>
           </div>
           <el-button type="primary" class="enter-btn" round @click="linkTo(index)">Enter POOL</el-button>
         </el-card>
@@ -49,8 +49,8 @@
         <el-card class="box-card">
           <div class="flex">
             <div class="name">
-              <img src="https://i.loli.net/2021/03/29/aZncSQp7CuEBy5x.png" />
-              <span>Public offering</span>
+              <img src="https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png" />
+              <span>Strategic funding</span>
             </div>
             <div>
               <span class="finshed">waiting</span>
@@ -61,7 +61,7 @@
             <span>Total funds will be raised</span>
           </div>
           <div class="flex price">
-            <span>1BNB=225.6FORK</span>
+            <span>1BNB=376FORK</span>
             <span>1000BNB</span>
           </div>
           <div class="progress-title">Progress</div>
@@ -77,7 +77,7 @@
             <span>Access Type</span>
             <span>
               <span class="public-icon"></span>
-              <span>Public</span>
+              <span>Private</span>
             </span>
           </div>
           <el-button type="info" :disabled="true" class="enter-btn" round>Enter POOL</el-button>
@@ -87,7 +87,45 @@
         <el-card class="box-card">
           <div class="flex">
             <div class="name">
-              <img src="https://i.loli.net/2021/03/29/aZncSQp7CuEBy5x.png" />
+              <img src="https://i.loli.net/2021/03/31/59Hcs4D2rZEWXdf.png" />
+              <span>Public offering</span>
+            </div>
+            <div>
+              <span class="finshed">waiting</span>
+            </div>
+          </div>
+          <div class="flex info">
+            <span>Ratio</span>
+            <span>Total funds will be raised</span>
+          </div>
+          <div class="flex price">
+            <span>1BNB=225FORK</span>
+            <span>1000BNB</span>
+          </div>
+          <div class="progress-title">Progress</div>
+          <el-progress
+            :stroke-width="8"
+            :percentage="0"
+            status="success"
+            :show-text="false"
+            color="#ffc107"
+          ></el-progress>
+          <span class="percent">0%</span>
+          <div class="flex access">
+            <span>Access Type</span>
+            <span>
+              <span class="public-icon"></span>
+              <span>Private</span>
+            </span>
+          </div>
+          <el-button type="info" :disabled="true" class="enter-btn" round>Enter POOL</el-button>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" v-if="poolLength < 4">
+        <el-card class="box-card">
+          <div class="flex">
+            <div class="name">
+              <img src="https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png" />
               <span>Rug pull victim Bonus</span>
             </div>
             <div>
@@ -115,14 +153,14 @@
             <span>Access Type</span>
             <span>
               <span class="public-icon"></span>
-              <span>Public</span>
+              <span>Private</span>
             </span>
           </div>
           <el-button type="info" :disabled="true" class="enter-btn" round>Enter POOL</el-button>
         </el-card>
       </el-col>
       <!-- comming soon -->
-      <el-col :xs="24" :sm="12" :md="8">
+      <!-- <el-col :xs="24" :sm="12" :md="8">
         <el-card class="box-card bg-card">
           <p>Coming Soon</p>
           <div class="progress-title">Progress</div>
@@ -136,7 +174,7 @@
           <span class="percent">0%</span>
           <el-button type="info" :disabled="true" class="enter-btn comming-btn" round>Enter POOL</el-button>
         </el-card>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
@@ -174,7 +212,7 @@ export default {
       const that = this;
       const current = this.contracts[`MoonFund`];
       const contract = new Contract(current.abi, current.address, current.name);
-      console.log('先获取长度');
+      console.log('first get poolLength');
       try {
         await contract.call('sellPoolLength', false, function(err, res) {
           if (!err) {
@@ -196,8 +234,15 @@ export default {
       }
       const currentTime = await this.getCurrentTime();
       console.log(currentTime, 'curr');
-      arr = arr.map(item => {
+      const logoList = [
+      "https://i.loli.net/2021/03/31/jg1DsxikGhovKX3.png",
+      "https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png",
+      "https://i.loli.net/2021/03/31/59Hcs4D2rZEWXdf.png",
+      "https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png"
+      ];
+      arr = arr.map((item, index) => {
         item.currentTime = currentTime;
+        item.logoUrl = logoList[index];
         if (item.currentTime <= item.startTime) {
           item.timestamp = 0;
           item.status = 0;
