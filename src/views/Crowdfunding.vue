@@ -47,7 +47,7 @@
         </div>
         <div class="btn-group">
           <el-button type="primary" class="btn" :disabled="!account || !white" v-click1="join" round
-            >Enter POOL</el-button
+            >Join POOL</el-button
           >
           <a :href="`${contracts.MoonFund.explorerUrl}`" target="_blank">
             <el-button type="info" round>View BSC</el-button>
