@@ -140,19 +140,21 @@ export default {
       this.sendLoading = true;
       let res = await common(this.deposit);
       if (res) {
+        const obj = {};
         const arr = [
           {
             val: this.val,
             time: new Date().Format('yyyy-MM-dd hh:mm:ss'),
           },
         ];
+        obj[this.account] = arr;
         const item = localStorage.getItem('fundraisingData');
         if (item) {
-          let list = JSON.parse(item);
-          list = [...list, ...arr];
-          localStorage.setItem('fundraisingData', JSON.stringify(list));
+          let localObj = JSON.parse(item);
+          localObj[this.account] = [...localObj[this.account], ...arr];
+          localStorage.setItem('fundraisingData', JSON.stringify(localObj));
         } else {
-          localStorage.setItem('fundraisingData', JSON.stringify(arr));
+          localStorage.setItem('fundraisingData', JSON.stringify(obj));
         }
         // this.maxVal = Number(this.maxVal) - Number(this.val);
         this.$emit('changeMax', Number(this.maxVal) - Number(this.val));

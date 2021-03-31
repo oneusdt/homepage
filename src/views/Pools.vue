@@ -160,7 +160,7 @@
         </el-card>
       </el-col>
       <!-- comming soon -->
-      <!-- <el-col :xs="24" :sm="12" :md="8">
+      <el-col :xs="24" :sm="12" :md="8">
         <el-card class="box-card bg-card">
           <p>Coming Soon</p>
           <div class="progress-title">Progress</div>
@@ -174,7 +174,7 @@
           <span class="percent">0%</span>
           <el-button type="info" :disabled="true" class="enter-btn comming-btn" round>Enter POOL</el-button>
         </el-card>
-      </el-col> -->
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -235,10 +235,10 @@ export default {
       const currentTime = await this.getCurrentTime();
       console.log(currentTime, 'curr');
       const logoList = [
-      "https://i.loli.net/2021/03/31/jg1DsxikGhovKX3.png",
-      "https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png",
-      "https://i.loli.net/2021/03/31/59Hcs4D2rZEWXdf.png",
-      "https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png"
+        'https://i.loli.net/2021/03/31/jg1DsxikGhovKX3.png',
+        'https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png',
+        'https://i.loli.net/2021/03/31/59Hcs4D2rZEWXdf.png',
+        'https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png',
       ];
       arr = arr.map((item, index) => {
         item.currentTime = currentTime;
@@ -277,7 +277,7 @@ export default {
   margin: 0 auto;
 }
 .bg-card {
-  background: #fafffc;
+  background: #e2fded;
 }
 .box-card {
   width: 320px;
@@ -294,6 +294,7 @@ export default {
     align-items: center;
     font-size: 16px;
     color: #22292f;
+    flex: 1;
     img {
       width: 50px;
       height: 50px;
