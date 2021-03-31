@@ -1,4 +1,4 @@
-# Fork-Finance Homepage
+## Fork-Finance Homepage
 
 **A defi factory on Binance Smart Chain that produces defi-project in a yield farming way**
 
@@ -22,6 +22,14 @@ npm run build
 
 npm run lint
 
+```
+
+## Deploy Usage
+
+```
+tar -cvf homepage.tar -C ./fork-homepage ./
+chmod +x ./deploy.sh
+./deploy.sh ./homepage.tar
 ```
 
 ## License

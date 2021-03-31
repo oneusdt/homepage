@@ -8,6 +8,7 @@ yarn.lock
 # local env files
 .env.local
 .env.*.local
+passwd.env
 
 # Log files
 npm-debug.log*
