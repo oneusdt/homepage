@@ -45,6 +45,44 @@
         </el-card>
       </el-col>
       <!-- demo data -->
+      <el-col :xs="24" :sm="12" :md="8" v-if="poolLength < 1">
+        <el-card class="box-card">
+          <div class="flex">
+            <div class="name">
+              <img src="https://i.loli.net/2021/03/31/jg1DsxikGhovKX3.png" />
+              <span>Seed funding</span>
+            </div>
+            <div>
+              <span class="finshed">waiting</span>
+            </div>
+          </div>
+          <div class="flex info">
+            <span>Ratio</span>
+            <span>Total funds will be raised</span>
+          </div>
+          <div class="flex price">
+            <span>1BNB=752FORK</span>
+            <span>100BNB</span>
+          </div>
+          <div class="progress-title">Progress</div>
+          <el-progress
+            :stroke-width="8"
+            :percentage="0"
+            status="success"
+            :show-text="false"
+            color="#ffc107"
+          ></el-progress>
+          <span class="percent">0%</span>
+          <div class="flex access">
+            <span>Access Type</span>
+            <span>
+              <span class="public-icon"></span>
+              <span>Private</span>
+            </span>
+          </div>
+          <el-button type="info" :disabled="true" class="enter-btn" round>Enter POOL</el-button>
+        </el-card>
+      </el-col>
       <el-col :xs="24" :sm="12" :md="8" v-if="poolLength < 2">
         <el-card class="box-card">
           <div class="flex">
