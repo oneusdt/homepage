@@ -23,7 +23,7 @@ async function init() {
   } else {
     store.dispatch('changeLoaded', true);
     store.state.enthume = false;
-    window.web3js = new Web3(new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545/'))
+    window.web3js = new Web3(new Web3.providers.HttpProvider(process.env.VUE_APP_NETWORK_RPC_URL))
     console.log('Please install MetaMask!');
   }
 }

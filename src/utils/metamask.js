@@ -52,10 +52,10 @@ function handleAccountsChanged(accounts) {
 // 节点发生改变
 function handleChainChanged(_chainId) {
   const chainId = eval(_chainId).toString(10);
-  if (store.state.chainId == 97 || store.state.chainId == 56) {
+  if (store.state.chainId == process.env.VUE_APP_NETWORK_ID) {
     store.commit('setNetError', true);
   }
-  if (chainId == 97 || chainId == 56) {
+  if (chainId == process.env.VUE_APP_NETWORK_ID) {
     store.commit('setNetError', false);
   }
   store.dispatch('changeChain', { key: 'chainId', val: chainId });

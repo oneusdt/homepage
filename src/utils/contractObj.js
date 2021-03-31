@@ -3,25 +3,37 @@ import WBNBJSON from '../contract/MockWBNB.json';
 import ForkJSON from '../contract/Fork.json';
 import sForkTokenJSON from '../contract/sForkToken.json';
 
+const EXPLORER_URLS = {
+  1: 'https://etherscan.io/address',
+  3: 'https://ropsten.etherscan.io/address',
+  4: 'https://rinkeby.etherscan.io/address',
+  5: 'https://goerli.etherscan.io/address',
+  42: 'https://kovan.etherscan.io/address',
+  56: 'https://bscscan.com/address',
+  97: 'https://testnet.bscscan.com/address',
+  128: 'https://hecoinfo.com/address',
+  250: 'https://ftmscan.com/address',
+  256: 'https://testnet.hecoinfo.com/address'
+}
+const networkId = process.env.VUE_APP_NETWORK_ID;
+
 export default {
   MoonFund: {
-    address: '0x21D504fe1D921722813A115C1438c9c7AAA16959',
+    address: process.env.VUE_APP_CONTRACT_MOON_FOUND,
     abi: moonFundJSON,
     name: 'MoonFund',
+    explorerUrl: `${EXPLORER_URLS[networkId]}/${process.env.VUE_APP_CONTRACT_MOON_FOUND}`
   },
   Fork: {
-    address: '0x56cadb9ef10ef7d8de22a5a49bd9c66893962e7f',
+    address: process.env.VUE_APP_CONTRACT_FORK,
     abi: ForkJSON,
     name: 'Fork',
-  },
-  sFork: {
-    abi: sForkTokenJSON,
-    address: '0xD3493492cc51b80F5101595b6B98b7c8c146030f',
-    name: 'sFork',
+    explorerUrl: `${EXPLORER_URLS[networkId]}/${process.env.VUE_APP_CONTRACT_FORK}`
   },
   BNB: {
-    address: '0x744FB5700D556Ec736Bc2924A2656196039937f1',
+    address: process.env.VUE_APP_CONTRACT_BNB,
     abi: WBNBJSON,
     name: 'BNB',
-  },
+    explorerUrl: `${EXPLORER_URLS[networkId]}/${process.env.VUE_APP_CONTRACT_BNB}`
+  }
 };

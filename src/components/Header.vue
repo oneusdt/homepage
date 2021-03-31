@@ -60,7 +60,7 @@ export default {
   async created() {
     await initWeb3();
     await this.init();
-    this.netError = this.chainId !== 56 && this.chainId !== 97;
+    this.netError = this.chainId != process.env.VUE_APP_NETWORK_ID;
   },
   computed: {
     path() {
@@ -89,7 +89,7 @@ export default {
       this.accounts = v;
     },
     chainId(v) {
-      if (v == 56 || v == 97) {
+      if (v == process.env.VUE_APP_NETWORK_ID || v == process.env.VUE_APP_NETWORK_ID) {
         this.netError = false;
       }
     },
@@ -100,7 +100,7 @@ export default {
       console.log('获取');
       const that = this;
       if (window.web3js) {
-        // 只有56 97才符合bsc
+        // 只有process.env.VUE_APP_NETWORK_ID process.env.VUE_APP_NETWORK_ID才符合bsc
         const chainId = await web3js.eth.getChainId();
         that.$store.dispatch('changeChain', { key: 'chainId', val: chainId });
         web3js.eth.getAccounts((error, result) => {
