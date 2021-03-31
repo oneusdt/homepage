@@ -8,7 +8,7 @@ set password [lindex $argv 3]
 set dest_path /data/www/homepage
 
 set remote_tmp_path /home/$username
-set file_name homepage.tar
+set file_name [exec basename $src_file]
 
 set dest_file $dest_path/$file_name
 set remote_tmp_file $remote_tmp_path/$file_name
@@ -45,4 +45,4 @@ send "rm -f $dest_file\r"
 send "exit\r"
 send "exit\r"
 expect eof
-interact
+#interact
