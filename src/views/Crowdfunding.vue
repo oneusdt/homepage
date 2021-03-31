@@ -2,7 +2,7 @@
   <div class="crowd-wrap">
     <div class="crowd" v-if="!unusual">
       <div class="top">
-        <h2>{{card.title}} Private Pool</h2>
+        <h2>{{ card.title }} Private Pool</h2>
         <p>
           0x4F7d4aCF1A2d92C5b64a7365e3cD2185c91F9e40
           <span @click="copy">
@@ -17,7 +17,7 @@
         <div class="pool-card">
           <van-skeleton :row="8" class="m-skeleton" :loading="skeletonLoading">
             <div class="flex">
-              <span>Swap Amount</span><span v-if="account && whilte">Credit remaining {{ BNB }} BNB</span>
+              <span>Swap Amount</span><span v-if="account && white">Credit remaining {{ BNB }} BNB</span>
             </div>
             <div class="title">{{ Math.floor(card.cap / card.price) }} BNB</div>
             <div class="finshed">
@@ -47,7 +47,9 @@
         </div>
         <div class="btn-group">
           <div class="btn disable" v-click1="join">JOIN POOL</div>
-          <div class="btn default"><a :href="`https://bscscan.com/address/${contracts.MoonFund.address}`" target="_blank">View BSC</a></div>
+          <div class="btn default">
+            <a :href="`https://bscscan.com/address/${contracts.MoonFund.address}`" target="_blank">View BSC</a>
+          </div>
         </div>
         <div
           class="pool-card tabs"
@@ -83,12 +85,16 @@
             <tbody>
               <tr>
                 <td>
-                  <p><span>Name</span><span>{{card.title}}</span></p>
+                  <p>
+                    <span>Name</span><span>{{ card.title }}</span>
+                  </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><span>Token Distribution</span><span>{{card.utcString}}</span></p>
+                  <p>
+                    <span>Token Distribution</span><span>{{ card.utcString }}</span>
+                  </p>
                 </td>
               </tr>
               <tr>
@@ -98,7 +104,9 @@
               </tr>
               <tr>
                 <td>
-                  <p><span>Hard Cap</span><span>{{ Math.floor(card.cap / card.price) }} BNB</span></p>
+                  <p>
+                    <span>Hard Cap</span><span>{{ Math.floor(card.cap / card.price) }} BNB</span>
+                  </p>
                 </td>
               </tr>
             </tbody>
@@ -122,7 +130,9 @@
               </tr>
               <tr>
                 <td>
-                  <p><span>Address</span><span>{{contracts.Fork.address}}</span></p>
+                  <p>
+                    <span>Address</span><span>{{ contracts.Fork.address }}</span>
+                  </p>
                 </td>
               </tr>
               <tr>
@@ -185,7 +195,7 @@ export default {
         cap: 0,
       },
       BNB: 'NaN',
-      whilte: false,
+      white: false,
     };
   },
   created() {
@@ -198,7 +208,8 @@ export default {
     fundraisingData() {
       const tableData = localStorage.getItem('fundraisingData');
       if (tableData) {
-        return JSON.parse(tableData);
+        const obj = JSON.parse(tableData);
+        return obj[this.account];
       }
       return [];
     },
@@ -256,7 +267,7 @@ export default {
           obj.timestamp = (obj.endTime - obj.currentTime) * 1000;
           obj.status = 1;
         }
-        obj.utcString = (new Date(obj.startTime*1000)).toUTCString();
+        obj.utcString = new Date(obj.startTime * 1000).toUTCString();
         this.card = obj;
         this.skeletonLoading = false;
       } catch {
@@ -273,13 +284,15 @@ export default {
         await contract.call('whitelist', [this.index, this.account], { from: this.account }, function(err, res) {
           if (!err) {
             if (res != 0) {
-              that.whilte = true;
+              that.white = true;
+              that.loading = false;
             } else {
+              that.white = false;
               that.loading = true;
             }
           }
         });
-        if (that.whilte) {
+        if (that.white) {
           await contract.call('userPendingQuata', [this.index, this.account], { from: this.account }, function(
             err,
             res,
@@ -288,6 +301,8 @@ export default {
               that.BNB = Number(web3js.utils.fromWei(res, 'ether'));
             }
           });
+        } else {
+          that.BNB = 'N/A';
         }
       } catch {
         console.log('error');
@@ -295,6 +310,14 @@ export default {
     },
     join() {
       if (this.card.status !== 1) {
+        return false;
+      }
+      if (!this.white) {
+        this.$message({
+          message: 'you are not in the whitelist',
+          type: 'error',
+          duration: 2000,
+        });
         return false;
       }
       this.modelVisable = true;

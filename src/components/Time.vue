@@ -32,7 +32,7 @@ export default {
     window.clearTimeout(this.timer);
   },
   created() {
-    this.timeOff = new Date().getTime() - this.startTime; //本地时间与区块时间间隔
+    this.timeOff = new Date().getTime() - this.startTime; //本地时间与区块时间间隔差
     this.fetchData();
     this.updateTime();
   },
@@ -84,6 +84,7 @@ export default {
         gap = 0;
       }
       const timestamp = end_time - current_time - gap;
+      // console.log(timestamp, '22')
       this.time = timestamp;
       this.formatTimeStamp(this.time);
       this.changeTime && this.changeTime(this.time);
@@ -104,10 +105,10 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
       seconds = seconds < 10 ? '0' + seconds : seconds;
 
-      this.hours - hours;
+      this.hours = hours;
       this.minutes = minutes;
       this.seconds = seconds;
-      // return `<span>${days}</span> : <span>${hours}</span> : <span>${minutes}</span> : <span>${seconds}</span>`;
+      return `${hours}:${minutes}:${seconds}`;
     },
   },
 };
@@ -117,7 +118,7 @@ export default {
   // padding: 0 10px;
   margin-top: 4px;
   display: inline-block;
-  min-width: 102px;
+  // min-width: 120px;
   .span {
     background: #f2f0eb;
     color: #22292f;
