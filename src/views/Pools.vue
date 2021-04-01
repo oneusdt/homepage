@@ -324,7 +324,7 @@ export default {
   margin: 0 auto;
 }
 .bg-card {
-  background: #e2fded;
+  background: #f8fbff;
 }
 .box-card {
   width: 320px;
@@ -409,7 +409,7 @@ export default {
   }
   p {
     font-size: 30px;
-    color: green;
+    color: #409eff;
     margin: 40px 0 40px;
     text-align: center;
   }
