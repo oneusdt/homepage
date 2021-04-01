@@ -83,7 +83,7 @@ export default {
     },
     account(v) {
       if (v) {
-        if (this.chainId == 56 || this.chainId == 97) {
+        if (this.chainId == process.env.VUE_APP_NETWORK_ID || this.chainId == process.env.VUE_APP_NETWORK_ID) {
           this.val = '';
           this.getBalance();
         }
@@ -92,7 +92,7 @@ export default {
       }
     },
     chainId(v) {
-      if (v == 56 || v == 97) {
+      if (v == process.env.VUE_APP_NETWORK_ID || v == process.env.VUE_APP_NETWORK_ID) {
         if (this.account) {
           this.val = '';
           this.getBalance();

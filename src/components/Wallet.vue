@@ -121,7 +121,7 @@ export default {
       return this.$store.state.chainId;
     },
     chainIdStates() {
-      return this.$store.state.chainId == 56 || this.$store.state.chainId == 97;
+      return this.$store.state.chainId == process.env.VUE_APP_NETWORK_ID || this.$store.state.chainId == process.env.VUE_APP_NETWORK_ID;
     },
     wallet() {
       return this.$store.state.wallet;
@@ -129,12 +129,12 @@ export default {
   },
   watch: {
     account(v) {
-      if (this.chainId == 56 || this.chainId == 97) {
+      if (this.chainId == process.env.VUE_APP_NETWORK_ID || this.chainId == process.env.VUE_APP_NETWORK_ID) {
         this.step = v ? 2 : 0;
       }
     },
     chainId(v) {
-      if (v == 56 || v == 97) {
+      if (v == process.env.VUE_APP_NETWORK_ID || v == process.env.VUE_APP_NETWORK_ID) {
         this.step = this.account ? 2 : 0;
       }
     },
@@ -168,7 +168,7 @@ export default {
         const chainId = await web3js.eth.getChainId();
         this.$store.dispatch('changeAccount', accounts[0]);
         this.$store.dispatch('changeChain', { key: 'chainId', val: chainId });
-        if (chainId !== 97 && chainId !== 56) {
+        if (chainId !== process.env.VUE_APP_NETWORK_ID && chainId !== process.env.VUE_APP_NETWORK_ID) {
           this.connectError = true;
           this.connectErrorMessage = `Unsupported chain id: ${chainId}. Supported chain ids are: 56,97.`;
           console.log('连接成功将, chaid 错误');

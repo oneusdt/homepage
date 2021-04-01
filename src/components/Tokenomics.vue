@@ -28,9 +28,12 @@
       <div class="box" v-show="activeIndex == 1">
         <div class="text">
           <div class="title">{{ menu[1] }}</div>
-          <div>The $FORK of 0.752million(4%) raised 2100 BNB in three installments, and the funds were directly injected into the Moon Fund. More details can be found in the documentation</div>
+          <div>
+            The $FORK of 0.752million(4%) raised 2100 BNB in three installments, and the funds were directly injected
+            into the Moon Fund. More details can be found in the documentation
+          </div>
         </div>
-        <div class="icon icon-develop" />
+        <div class="icon icon-accepet" />
       </div>
       <div class="box" v-show="activeIndex == 2">
         <div class="text">
@@ -40,7 +43,7 @@
             subject to the same two-year vesting as the tokens from the Fair Launch Distribution.
           </div>
         </div>
-        <div class="icon icon-develop" />
+        <div class="icon icon-exchange" />
       </div>
       <div class="box" v-show="activeIndex == 3">
         <div class="text">
@@ -53,7 +56,7 @@
             if there is prior approval from a community vote.
           </div>
         </div>
-        <div class="icon icon-develop" />
+        <div class="icon icon-refund" />
       </div>
       <div class="box" v-show="activeIndex == 4">
         <div class="text">
@@ -145,15 +148,29 @@ export default {
   height: 120px;
   align-self: flex-end;
   margin-bottom: 30px;
+  margin-left: 10px;
 }
 .icon-money {
-  background: url('../assets/images/money_bag.png') no-repeat;
+  background: url('https://i.loli.net/2021/04/01/FtGaeYm3IAOWoHE.png') no-repeat;
   background-size: 100% 100%;
 }
 .icon-develop {
-  background: url('../assets/images/develop.png') no-repeat;
+  background: url('https://i.loli.net/2021/04/01/5N6Y9fyXCLpBuKj.png') no-repeat;
   background-size: 100% 100%;
 }
+.icon-exchange {
+  background: url('https://i.loli.net/2021/04/01/EVqg6UDitW1FHzQ.png') no-repeat;
+  background-size: 100% 100%;
+}
+.icon-refund {
+  background: url('https://i.loli.net/2021/04/01/d7yuJQx5Z1EmWe3.png') no-repeat;
+  background-size: 100% 100%;
+}
+.icon-accepet {
+  background: url('https://i.loli.net/2021/04/01/nXl7rUE8YdiZQgA.png') no-repeat;
+  background-size: 100% 100%;
+}
+
 @media (max-width: 991px) {
   .box {
     width: 400px;
@@ -177,6 +194,7 @@ export default {
   }
   .box {
     width: 100%;
+    flex-direction: column;
   }
 }
 @media (min-width: 992px) {

@@ -7,9 +7,9 @@
     <div class="header">
       <div class="header-left">
         <a href="/">
-          <img src="https://img.bee-cdn.com/large/3b9ae203lz1gosu29cz4cj201701bq2r.jpg" />
+          <img src="https://i.loli.net/2021/04/01/WEcd5aKH2fT1whR.png" />
           <span class="hidden-xs-only">ForkFinance</span>
-          <span class="hidden-sm-and-up">Fork<br>Finance</span>
+          <span class="hidden-sm-and-up">Fork<br />Finance</span>
         </a>
       </div>
       <div class="header-right">
@@ -60,7 +60,7 @@ export default {
   async created() {
     await initWeb3();
     await this.init();
-    this.netError = this.chainId !== 56 && this.chainId !== 97;
+    this.netError = this.chainId != process.env.VUE_APP_NETWORK_ID;
   },
   computed: {
     path() {
@@ -89,18 +89,18 @@ export default {
       this.accounts = v;
     },
     chainId(v) {
-      if (v == 56 || v == 97) {
+      if (v == process.env.VUE_APP_NETWORK_ID || v == process.env.VUE_APP_NETWORK_ID) {
         this.netError = false;
       }
     },
   },
   methods: {
-    // 正常获取到账号了
+    // get accout
     async init() {
       console.log('获取');
       const that = this;
       if (window.web3js) {
-        // 只有56 97才符合bsc
+        // first common get chainId
         const chainId = await web3js.eth.getChainId();
         that.$store.dispatch('changeChain', { key: 'chainId', val: chainId });
         web3js.eth.getAccounts((error, result) => {
