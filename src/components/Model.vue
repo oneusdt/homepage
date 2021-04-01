@@ -102,6 +102,15 @@ export default {
       }
     },
   },
+  mounted() {
+    const orignalSetItem = localStorage.setItem;
+    localStorage.setItem = function(key, newValue) {
+      const setItemEvent = new Event('setItemEvent');
+      setItemEvent.newValue = newValue;
+      window.dispatchEvent(setItemEvent);
+      orignalSetItem.apply(this, arguments);
+    };
+  },
   methods: {
     // getbalance user
     async getBalance() {
@@ -160,6 +169,7 @@ export default {
         }
         localStorage.setItem('fundraisingData', JSON.stringify(recordList));
         // this.maxVal = Number(this.maxVal) - Number(this.val);
+        this.$emit('addTable');
         this.$emit('changeMax', Number(this.maxVal) - Number(this.val));
         this.total = Number(this.total) - Number(this.val);
         this.val = '';

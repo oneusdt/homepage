@@ -166,6 +166,7 @@
         :onCanel="closeModel"
         :onClose="closeModel"
         @changeMax="changeBNB"
+        @addTable="changeForm"
         ref="model"
       />
     </div>
@@ -192,6 +193,7 @@ export default {
       unusual: false,
       tab: 'fundraising',
       status: ['waiting', 'starting', 'finshed'],
+      fundraisingData: [],
       modelVisable: false,
       skeletonLoading: true, // card-loading
       loading: false, // tab-loading
@@ -205,16 +207,18 @@ export default {
       white: false,
     };
   },
-  created() {
+  async created() {
     this.getCardInfo();
     if (this.account && !this.chainIdError) {
       this.getBalance();
+      this.changeForm();
     }
   },
   watch: {
-    account(v) {
+    async account(v) {
       if (v && !this.chainIdError) {
         this.getBalance();
+        this.changeForm();
       }
     },
     chainIdError(status) {
@@ -230,16 +234,6 @@ export default {
     },
   },
   computed: {
-    fundraisingData() {
-      if (this.white) {
-        const tableData = localStorage.getItem('fundraisingData');
-        if (tableData) {
-          const obj = JSON.parse(tableData);
-          return obj[this.index][this.account.toLowerCase()];
-        }
-      }
-      return [];
-    },
     account() {
       return this.$store.state.account;
     },
@@ -251,6 +245,19 @@ export default {
     },
   },
   methods: {
+    changeForm() {
+      const tableData = localStorage.getItem('fundraisingData');
+      if (tableData) {
+        let arr = [];
+        const obj = JSON.parse(tableData);
+        console.log(obj);
+        if (obj[this.index]) {
+          arr = obj[this.index][this.account.toLowerCase()] || [];
+        }
+        console.log(arr);
+        this.fundraisingData = arr;
+      }
+    },
     async getCurrentTime() {
       let time = await web3js.eth.getBlock('latest');
       return time.timestamp;
