@@ -140,6 +140,7 @@ export default {
       this.sendLoading = true;
       let res = await common(this.deposit);
       if (res) {
+        const recordList = {};
         const obj = {};
         const arr = [
           {
@@ -147,15 +148,17 @@ export default {
             time: new Date().Format('yyyy-MM-dd hh:mm:ss'),
           },
         ];
-        obj[this.account] = arr;
+        obj[this.account.toLowerCase()] = arr;
         const item = localStorage.getItem('fundraisingData');
-        if (item) {
-          let localObj = JSON.parse(item);
-          localObj[this.account] = [...localObj[this.account], ...arr];
-          localStorage.setItem('fundraisingData', JSON.stringify(localObj));
+        const localRecordList = item ? JSON.parse(item) : {};
+        if (localRecordList && typeof localRecordList[this.index] != 'undefined' && localRecordList[this.index]) {
+          let localObj = localRecordList[this.index];
+          localObj[this.account.toLowerCase()] = [...localObj[this.account.toLowerCase()], ...arr];
+          recordList[this.index] = localObj;
         } else {
-          localStorage.setItem('fundraisingData', JSON.stringify(obj));
+          recordList[this.index] = obj;
         }
+        localStorage.setItem('fundraisingData', JSON.stringify(recordList));
         // this.maxVal = Number(this.maxVal) - Number(this.val);
         this.$emit('changeMax', Number(this.maxVal) - Number(this.val));
         this.total = Number(this.total) - Number(this.val);

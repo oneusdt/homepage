@@ -235,7 +235,7 @@ export default {
         const tableData = localStorage.getItem('fundraisingData');
         if (tableData) {
           const obj = JSON.parse(tableData);
-          return obj[this.account.toLowerCase()];
+          return obj[this.index][this.account.toLowerCase()];
         }
       }
       return [];
