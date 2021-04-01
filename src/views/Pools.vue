@@ -233,6 +233,16 @@ export default {
       status: ['waiting', 'starting', 'finshed'],
     };
   },
+  watch: {
+    chainIdError(status) {
+      if (status) {
+        this.list = [];
+      } else {
+        this.$store.commit('setLoadingState', true);
+        this.getPools();
+      }
+    },
+  },
   created() {
     this.$store.commit('setLoadingState', true);
     this.getPools();
@@ -293,7 +303,6 @@ export default {
         }
         return item;
       });
-      console.log(arr, '111');
       this.list = arr;
       this.$store.commit('setLoadingState', false);
     },

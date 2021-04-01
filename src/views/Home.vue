@@ -105,10 +105,10 @@ export default {
 }
 //banner
 .banner {
-  padding: 64px 0;
+  padding: 64px 0 40px;
 }
 .banner-bg {
-  background: url(https://img.bee-cdn.com/large/3b9ae203lz1gosvcrec63j20xc09740r.jpg) no-repeat;
+  background: url(https://i.loli.net/2021/04/01/2YSlrPF1RzNy6IJ.png) no-repeat;
   background-size: 100%;
   width: 100%;
   padding-bottom: 27.5%;
@@ -147,10 +147,35 @@ export default {
   padding: 20px;
   .section-1-con {
     color: #fff;
-    background: url('https://img.bee-cdn.com/large/3b9ae203lz1gosv8hrdcaj20re0d9dge.jpg');
-    background-size: 100% 100%;
+    background: #75bae7;
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 30%);
     padding: 45px;
-    border-radius: 20px;
+    border-radius: 10px;
+    position: relative;
+    &::after {
+      content: ' ';
+      background: url('https://i.loli.net/2021/04/01/cHnU7doO8uQ9Ttw.png') no-repeat;
+      background-size: 100% 100%;
+      width: 150px;
+      height: 96px;
+      position: absolute;
+      top: 0;
+      right: 45px;
+      margin-left: auto;
+    }
+    &::before {
+      content: ' ';
+      background: url('https://i.loli.net/2021/04/01/jaebJAvMSYm4CTw.png') no-repeat;
+      background-size: 100% 100%;
+      width: 400px;
+      height: 74px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
   .big-title {
     font-size: 50px;
@@ -190,9 +215,14 @@ export default {
     font-size: 36px;
   }
   .section-1 {
-    padding: 45px 30px;
+    padding: 0 30px 45px;
     .section-1-con {
       padding: 30px 16px;
+      &::after {
+        width: 120px;
+        height: 80px;
+        right: 20px;
+      }
     }
     .big-title {
       font-size: 30px;
@@ -241,7 +271,18 @@ export default {
     padding: 50px 16px;
   }
   .section-1 {
-    padding: 32px 16px;
+    padding: 0 16px 32px;
+    .section-1-con {
+      &::before {
+        width: 280px;
+        height: 51px;
+      }
+      &::after {
+        width: 80px;
+        height: 50px;
+        right: 16px;
+      }
+    }
   }
   .timeline-article .content-box {
     font-size: 13px;

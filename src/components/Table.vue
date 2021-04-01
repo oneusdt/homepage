@@ -97,7 +97,7 @@ export default {
     text-align: center;
   }
   .money {
-    color: #ff9800;
+    color: #f3ba2e;
   }
 }
 .content {

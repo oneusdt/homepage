@@ -42,7 +42,6 @@ function handleAccountsChanged(accounts) {
     store.dispatch('changeAccount', '');
     store.dispatch('changeWallet', '');
   } else if (accounts[0] !== currentAccount) {
-    // console.log('用户切换');
     // window.location.reload();
     store.dispatch('changeAccount', accounts[0]);
     store.dispatch('changeWallet', 'MetaMask');
@@ -109,7 +108,6 @@ export async function requestPermissions() {
   }
   return false;
 }
-
 
 export default {
   checkProvider,

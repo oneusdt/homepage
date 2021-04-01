@@ -13,7 +13,8 @@ const EXPLORER_URLS = {
   128: 'https://hecoinfo.com/address',
   250: 'https://ftmscan.com/address',
   256: 'https://testnet.hecoinfo.com/address',
-}
+};
+
 const networkId = process.env.VUE_APP_NETWORK_ID;
 
 export default {

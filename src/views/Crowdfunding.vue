@@ -2,9 +2,9 @@
   <div class="crowd-wrap">
     <div class="crowd" v-if="!unusual">
       <div class="top">
-        <h2>{{ card.title }} Private Pool</h2>
+        <h2 v-show="card.title">{{ card.title }} Private Pool</h2>
         <p>
-          {{contracts.MoonFund.address}}
+          {{ contracts.MoonFund.address }}
           <span @click="copy">
             <i class="el-icon-copy-document"></i>
           </span>
@@ -56,14 +56,18 @@
         <div
           class="pool-card tabs"
           v-loading="loading"
-          element-loading-text="Sorry, you are not eligable for this project  since you are not involved in the whitelist."
+          :element-loading-text="
+            chainIdError
+              ? `Unsupported current chain id, Supported chain ids are: ${networkId}.`
+              : 'Sorry, you are not eligable for this project  since you are not involved in the whitelist.'
+          "
           element-loading-spinner="none"
           element-loading-background="rgba(34,41,47,.7)"
         >
           <el-tabs v-model="tab">
             <el-tab-pane label="Fundraising Record" name="fundraising">
               <el-table
-                :data="fundraisingData"
+                :data="chainIdError ? [] : fundraisingData"
                 style="width: 100%"
                 class="customer-table"
                 empty-text="No data temporarily"
@@ -184,6 +188,7 @@ export default {
   },
   data() {
     return {
+      networkId: process.env.VUE_APP_NETWORK_ID,
       unusual: false,
       tab: 'fundraising',
       status: ['waiting', 'starting', 'finshed'],
@@ -202,23 +207,36 @@ export default {
   },
   created() {
     this.getCardInfo();
-    if (this.account) {
+    if (this.account && !this.chainIdError) {
       this.getBalance();
     }
   },
   watch: {
     account(v) {
-      if (v) {
-        this.geBalance();
+      if (v && !this.chainIdError) {
+        this.getBalance();
+      }
+    },
+    chainIdError(status) {
+      if (status) {
+        this.loading = true;
+        this.skeletonLoading = true;
+      } else {
+        this.getCardInfo();
+        if (this.white) {
+          this.loading = false;
+        }
       }
     },
   },
   computed: {
     fundraisingData() {
-      const tableData = localStorage.getItem('fundraisingData');
-      if (tableData) {
-        const obj = JSON.parse(tableData);
-        return obj[this.account];
+      if (this.white) {
+        const tableData = localStorage.getItem('fundraisingData');
+        if (tableData) {
+          const obj = JSON.parse(tableData);
+          return obj[this.account.toLowerCase()];
+        }
       }
       return [];
     },
@@ -366,12 +384,14 @@ export default {
 .top {
   max-width: 1024px;
   margin: 0 auto;
+  padding-top: 100px;
+  background: url(https://www.ethalend.org/static/abstract-bg-888be7d571a5a4fae2f9c93652102008.svg);
+  background-size: 100%;
   h2 {
     font-size: 50px;
     font-weight: 600;
     color: #22292f;
     line-height: 50px;
-    margin-top: 100px;
   }
   p {
     font-size: 24px;
@@ -538,14 +558,6 @@ export default {
     .title,
     .finshed {
       font-size: 18px;
-    }
-  }
-  .btn-group {
-    .btn {
-      width: 120px;
-      height: 36px;
-      line-height: 36px;
-      font-size: 14px;
     }
   }
   .bottom h2 {

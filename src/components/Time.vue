@@ -1,7 +1,9 @@
 <template>
   <span>
     <span class="time">
-      <span class="span">{{ hours }}</span> : <span class="span">{{ minutes }}</span> :
+      <template v-if="days > 0">
+        <span class="span">{{ days }}</span> : </template
+      ><span class="span">{{ hours }}</span> : <span class="span">{{ minutes }}</span> :
       <span class="span">{{ seconds }}</span>
     </span>
     <!-- <span class="time" v-show="time == '' || time < 1000">waiting</span> -->
@@ -22,6 +24,7 @@ export default {
       load: false,
       timeOff: 0,
       lastTime: 0, // 记录上一次的时间戳
+      days: 0,
       hours: '00',
       seconds: '00',
       minutes: '00',
@@ -97,32 +100,33 @@ export default {
         this.seconds = '00';
         return false;
       }
-      // let days = parseInt(ms / (1000 * 60 * 60 * 24)),
-      let hours = parseInt(ms / (1000 * 60 * 60)),
+      let days = parseInt(ms / (1000 * 60 * 60 * 24)),
+        hours =
+          parseInt(ms / (1000 * 60 * 60)) >= 24
+            ? parseInt(parseInt(ms / 1000 / 60) / 60) % 24
+            : parseInt(ms / (1000 * 60 * 60)),
         minutes = parseInt((ms % (1000 * 60 * 60)) / (1000 * 60)),
         seconds = parseInt((ms % (1000 * 60)) / 1000);
       hours = hours < 10 ? '0' + hours : hours;
       minutes = minutes < 10 ? '0' + minutes : minutes;
       seconds = seconds < 10 ? '0' + seconds : seconds;
-
+      this.days = days;
       this.hours = hours;
       this.minutes = minutes;
       this.seconds = seconds;
-      return `${hours}:${minutes}:${seconds}`;
+      return `${days}:${hours}:${minutes}:${seconds}`;
     },
   },
 };
 </script>
 <style lang="less" scoped>
 .time {
-  // padding: 0 10px;
   margin-top: 4px;
   display: inline-block;
-  // min-width: 120px;
   .span {
     background: #f2f0eb;
     color: #22292f;
-    padding: 0 4px;
+    padding: 0 2px;
     border-radius: 3px;
   }
 }

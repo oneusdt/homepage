@@ -322,7 +322,6 @@ h2 {
   top: 0;
 }
 .timeline-content {
-  height: 310px;
   position: relative;
 }
 .horizontal-menu {
@@ -383,6 +382,9 @@ h2 {
   max-height: 200px;
   //   overflow: auto;
   white-space: break-spaces;
+  div {
+    word-break: break-word;
+  }
 }
 .content-box::before {
   content: ' ';
@@ -402,7 +404,7 @@ h2 {
 .arrow-left {
   width: 30px;
   height: 30px;
-  background: url('../assets/images/arrow_left.png') no-repeat;
+  background: url('https://i.loli.net/2021/04/01/eO7cAyq2CfaBmx3.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: 10%;
@@ -414,7 +416,7 @@ h2 {
 .arrow-right {
   width: 30px;
   height: 30px;
-  background: url('../assets/images/arrow_right.png') no-repeat;
+  background: url('https://i.loli.net/2021/04/01/kmaS4AIzY6C7PpJ.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   right: 10%;
@@ -426,6 +428,9 @@ h2 {
 @media (max-width: 991px) {
 }
 @media (max-width: 767px) {
+  .main-time-line {
+    min-height: 260px;
+  }
   h2 {
     font-size: 30px;
   }

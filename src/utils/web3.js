@@ -21,10 +21,10 @@ async function init() {
     store.dispatch('changeLoaded', true);
     // startApp(provider); // Initialize your app
   } else {
-    store.dispatch('changeLoaded', true);
     store.state.enthume = false;
-    window.web3js = new Web3(new Web3.providers.HttpProvider(process.env.VUE_APP_NETWORK_RPC_URL))
+    window.web3js = new Web3(new Web3.providers.HttpProvider(process.env.VUE_APP_NETWORK_RPC_URL));
     console.log('Please install MetaMask!');
+    store.dispatch('changeLoaded', true);
   }
 }
 

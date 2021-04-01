@@ -31,6 +31,7 @@ export default {
   z-index: 10000;
   padding-top: 50px;
   font-size: 12px;
+   perspective:1000;
   .text {
     text-align: center;
     font-size: 14px;
@@ -39,13 +40,13 @@ export default {
 }
 
 .base {
-  height: 6em;
+  height: 8em;
   left: 50%;
-  margin: -6em;
+  margin: -8em;
   padding: 3em;
   position: absolute;
   top: 40%;
-  width: 6em;
+  width: 8em;
   transform: rotateX(45deg) rotateZ(45deg);
   transform-style: preserve-3d;
   box-sizing: content-box;

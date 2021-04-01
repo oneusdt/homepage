@@ -1,7 +1,7 @@
 <template>
   <div class="footer" id="join">
     <div class="footer-left">
-      <img src="https://img.bee-cdn.com/large/3b9ae203lz1gosu29cz4cj201701bq2r.jpg" />
+      <img src="https://i.loli.net/2021/04/01/WEcd5aKH2fT1whR.png" />
       <div class="info">
         <div class="join">JOIN US</div>
         <div>Email: team@fork-finance.org</div>
@@ -88,7 +88,7 @@
 @media (max-width: 767px) {
   .footer {
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 10px 20px;
   }
   .footer-left img {
     width: 40px;
