@@ -16,7 +16,13 @@
                 v-if="item.timestamp >= 1000"
                 :endTime="item.endTime * 1000"
                 :startTime="item.currentTime * 1000"
-                :changeTime="time => changeTime(time, item)"
+                :changeTime="time => changeTime(time, item, 'start')"
+              />
+              <Time
+                v-if="item.timestamp1 >= 1000"
+                :endTime="item.startTime * 1000"
+                :startTime="item.currentTime * 1000"
+                :changeTime="time => changeTime(time, item, 'wait')"
               />
             </div>
           </div>
@@ -41,7 +47,14 @@
             <span>Access Type</span>
             <span> <span class="public-icon"></span> <span>Private</span></span>
           </div>
-          <el-button type="primary" class="enter-btn" round @click="linkTo(index)">Enter POOL</el-button>
+          <el-button
+            :type="item.status == 2 || item.status == 0 ? 'info' : 'primary'"
+            class="enter-btn"
+            :disabled="item.status == 2 || item.status == 0"
+            round
+            @click="linkTo(index)"
+            >Enter POOL</el-button
+          >
         </el-card>
       </el-col>
       <!-- demo data -->
@@ -256,11 +269,9 @@ export default {
       return time.timestamp;
     },
     async getPools() {
-      console.log('getpools');
       const that = this;
       const current = this.contracts[`MoonFund`];
       const contract = new Contract(current.abi, current.address, current.name);
-      console.log('first get poolLength');
       try {
         await contract.call('sellPoolLength', false, function(err, res) {
           if (!err) {
@@ -281,24 +292,27 @@ export default {
         });
       }
       const currentTime = await this.getCurrentTime();
-      console.log(currentTime, 'curr');
       const logoList = [
         'https://i.loli.net/2021/03/31/jg1DsxikGhovKX3.png',
         'https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png',
         'https://i.loli.net/2021/03/31/59Hcs4D2rZEWXdf.png',
         'https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png',
       ];
+      //timestamp1 means Not started time
       arr = arr.map((item, index) => {
         item.currentTime = currentTime;
         item.logoUrl = logoList[index];
         if (item.currentTime <= item.startTime) {
           item.timestamp = 0;
+          item.timestamp1 = Math.abs(item.startTime - item.currentTime) * 1000;
           item.status = 0;
         } else if (item.endTime <= item.currentTime) {
           item.timestamp = 0;
+          item.timestamp1 = 0;
           item.status = 2;
         } else {
           item.timestamp = (item.endTime - item.currentTime) * 1000;
+          item.timestamp1 = 0;
           item.status = 1;
         }
         return item;
@@ -306,10 +320,18 @@ export default {
       this.list = arr;
       this.$store.commit('setLoadingState', false);
     },
-    changeTime(time, item) {
-      item.timestamp = time;
-      if (item.timestamp < 1000) {
-        item.status = 2;
+    changeTime(time, item, type) {
+      // 0 waiting 1start 2finshed
+      if (type == 'start') {
+        item.timestamp = time;
+        if (item.timestamp < 1000) {
+          item.status = 2;
+        }
+      } else {
+        item.timestamp1 = time;
+        if (item.timestamp1 < 1000) {
+          item.status = 1;
+        }
       }
     },
   },

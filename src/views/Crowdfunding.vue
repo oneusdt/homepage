@@ -26,9 +26,17 @@
               }}</span>
               <Time
                 class="duration"
+                v-if="card.timestamp >= 1000"
                 :endTime="card.endTime * 1000"
                 :startTime="card.currentTime * 1000"
-                :changeTime="changeTime"
+                :changeTime="time => changeTime(time, 'start')"
+              />
+              <Time
+                class="duration"
+                v-if="card.timestamp1 >= 1000"
+                :endTime="card.startTime * 1000"
+                :startTime="card.currentTime * 1000"
+                :changeTime="time => changeTime(time, 'wait')"
               />
             </div>
             <div class="progress-title">Swap Progress</div>
@@ -46,7 +54,12 @@
           </van-skeleton>
         </div>
         <div class="btn-group">
-          <el-button type="primary" class="btn" :disabled="!account || !white" v-click1="join" round
+          <el-button
+            type="primary"
+            class="btn"
+            :disabled="!account || !white || card.status == 0 || card.status == 2"
+            v-click1="join"
+            round
             >Join POOL</el-button
           >
           <a :href="`${contracts.MoonFund.explorerUrl}`" target="_blank">
@@ -72,8 +85,8 @@
                 class="customer-table"
                 empty-text="No data temporarily"
               >
-                <el-table-column prop="val" label="investment BNB Amount"> </el-table-column>
-                <el-table-column prop="time" label="time" width="120"> </el-table-column>
+                <el-table-column prop="val" label="investment bnb amount"> </el-table-column>
+                <el-table-column prop="time" label="time" :width="156"> </el-table-column>
               </el-table>
             </el-tab-pane>
           </el-tabs>
@@ -137,7 +150,7 @@
               <tr>
                 <td>
                   <p>
-                    <span>Address</span><span>{{ contracts.Fork.address }}</span>
+                    <span>Address</span><span class="address">{{ contracts.Fork.address }}</span>
                   </p>
                 </td>
               </tr>
@@ -189,6 +202,7 @@ export default {
   },
   data() {
     return {
+      clientWidth: 0,
       networkId: process.env.VUE_APP_NETWORK_ID,
       unusual: false,
       tab: 'fundraising',
@@ -213,6 +227,7 @@ export default {
       this.getBalance();
       this.changeForm();
     }
+    this.getWidth();
   },
   watch: {
     async account(v) {
@@ -245,16 +260,17 @@ export default {
     },
   },
   methods: {
+    getWidth() {
+      this.clientWidth = document.body.clientWidth;
+    },
     changeForm() {
       const tableData = localStorage.getItem('fundraisingData');
       if (tableData) {
         let arr = [];
         const obj = JSON.parse(tableData);
-        console.log(obj);
         if (obj[this.index]) {
           arr = obj[this.index][this.account.toLowerCase()] || [];
         }
-        console.log(arr);
         this.fundraisingData = arr;
       }
     },
@@ -277,18 +293,33 @@ export default {
         obj.currentTime = await this.getCurrentTime();
         if (obj.currentTime <= obj.startTime) {
           obj.timestamp = 0;
+          obj.timestamp1 = Math.abs(obj.startTime - obj.currentTime) * 1000;
           obj.status = 0;
         } else if (obj.endTime <= obj.currentTime) {
           obj.timestamp = 0;
+          obj.timestamp1 = 0;
           obj.status = 2;
         } else {
           obj.timestamp = (obj.endTime - obj.currentTime) * 1000;
+          obj.timestamp1 = 0;
           obj.status = 1;
         }
+
+        // if (obj.currentTime <= obj.startTime) {
+        //   obj.timestamp = (obj.startTime - obj.currentTime) * 1000;
+        //   obj.status = 0;
+        // } else if (obj.endTime <= obj.currentTime) {
+        //   obj.timestamp = 0;
+        //   obj.status = 2;
+        // } else {
+        //   obj.timestamp = (obj.endTime - obj.currentTime) * 1000;
+        //   obj.status = 1;
+        // }
         obj.utcString = new Date(obj.startTime * 1000).toUTCString();
         this.card = obj;
         this.skeletonLoading = false;
       } catch {
+        this.unusual = true;
         console.log('error');
       }
     },
@@ -323,7 +354,7 @@ export default {
           that.BNB = 'N/A';
         }
       } catch {
-        console.log('error');
+        console.log('getbalance error');
       }
     },
     join() {
@@ -351,10 +382,19 @@ export default {
         duration: 2000,
       });
     },
-    changeTime(time) {
-      this.card.timestamp = Number(time);
-      if (this.card.timestamp < 1000) {
-        this.card.status = 2;
+    async changeTime(time, type) {
+      if (type == 'start') {
+        this.card.timestamp = Number(time);
+        if (this.card.timestamp < 1000) {
+          this.card.status = 2;
+        }
+      } else {
+        this.card.timestamp1 = Number(time);
+        if (this.card.timestamp1 < 1000) {
+          this.card.status = 1;
+          this.card.currentTime = await getCurrentTime();
+          this.card.timestamp = (this.card.endTime - this.card.currentTime) * 1000;
+        }
       }
     },
     modelChange() {
@@ -534,6 +574,10 @@ export default {
     margin: 20px;
     font-size: 18px;
   }
+}
+.address {
+  display: inline-block;
+  word-break: break-all;
 }
 @media (max-width: 991px) {
 }

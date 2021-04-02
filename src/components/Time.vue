@@ -6,7 +6,6 @@
       ><span class="span">{{ hours }}</span> : <span class="span">{{ minutes }}</span> :
       <span class="span">{{ seconds }}</span>
     </span>
-    <!-- <span class="time" v-show="time == '' || time < 1000">waiting</span> -->
   </span>
 </template>
 <script>
@@ -23,7 +22,7 @@ export default {
       timer: null,
       load: false,
       timeOff: 0,
-      lastTime: 0, // 记录上一次的时间戳
+      lastTime: 0, // prev timestamp
       days: 0,
       hours: '00',
       seconds: '00',
@@ -35,31 +34,29 @@ export default {
     window.clearTimeout(this.timer);
   },
   created() {
-    this.timeOff = new Date().getTime() - this.startTime; //本地时间与区块时间间隔差
+    this.timeOff = new Date().getTime() - this.startTime; //Difference between local time and block time interval
     this.fetchData();
     this.updateTime();
   },
 
   methods: {
-    /* 获取未付费订单列表数据 */
     fetchData() {
       this.lastTime = Date.now();
-      // 开始倒计时
+      // start countdown
       this.countDown();
     },
 
-    /* 倒计时 */
     countDown() {
       if (window.requestAnimationFrame) {
-        // 浏览器支持requestAnimationFrame
+        // browser support requestAnimationFrame
         window.requestAnimationFrame(this.animationCb);
       } else {
-        // 用setTimeout兼容
+        // use setTimeout compatible
         this.timer = setTimeout(this.setTimeoutCb, 1000);
       }
     },
 
-    /* setTimeout调函数 */
+    /* setTimeout callback */
     setTimeoutCb() {
       this.updateTime();
       if (this.time > 1000) {
@@ -67,7 +64,7 @@ export default {
       }
     },
 
-    /* requestAnimationFrame回调函数 */
+    /* requestAnimationFrame callback */
     animationCb() {
       if (Date.now() - this.lastTime >= 1000) {
         this.lastTime = Date.now();
@@ -79,15 +76,13 @@ export default {
       window.requestAnimationFrame(this.animationCb);
     },
     updateTime() {
-      // let end_time = new Date('2021-03-23 19:29:00');
-      let end_time = this.endTime - this.timeOff; // 结束时间
+      let end_time = this.endTime - this.timeOff; // real endtime
       let current_time = new Date();
-      let gap = current_time.valueOf() - this.lastTime - 1000; //倒计时-计时器-浏览器进程切后台后，去除进程暂停时间
+      let gap = current_time.valueOf() - this.lastTime - 1000; //Countdown-Timer-After the browser process is switched to the background, remove the process pause time
       if (gap < 0) {
         gap = 0;
       }
       const timestamp = end_time - current_time - gap;
-      // console.log(timestamp, '22')
       this.time = timestamp;
       this.formatTimeStamp(this.time);
       this.changeTime && this.changeTime(this.time);
