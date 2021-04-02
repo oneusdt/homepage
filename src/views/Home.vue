@@ -10,7 +10,7 @@
         <p class="hidden-sm-and-up">
           A defi factory on Binance Smart Chain that produces defi-project in a yield farming way
         </p>
-        <a href="/pools"><div class="banner-btn">Crowdfunding</div></a>
+        <a href="/pools"><div class="banner-btn">WHITELIST POOL</div></a>
       </div>
       <div class="banner-bg" />
     </div>
@@ -23,7 +23,7 @@
             <p class="font-16">
               The existence of Fork-finance is to solve the three major problems of the current DEFI project: fund
               security issues/insufficient wealth effect/too short dividend period. For this reason, we have carefully
-              designed the agreement.
+              designed the protocol.
             </p>
           </el-col>
         </el-row>
