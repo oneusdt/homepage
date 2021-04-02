@@ -222,9 +222,9 @@ export default {
     };
   },
   async created() {
-    this.getCardInfo();
+    await this.getCardInfo();
     if (this.account && !this.chainIdError) {
-      this.getBalance();
+      await this.getBalance();
       this.changeForm();
     }
     this.getWidth();
@@ -232,16 +232,16 @@ export default {
   watch: {
     async account(v) {
       if (v && !this.chainIdError) {
-        this.getBalance();
+        await this.getBalance();
         this.changeForm();
       }
     },
-    chainIdError(status) {
+    async chainIdError(status) {
       if (status) {
         this.loading = true;
         this.skeletonLoading = true;
       } else {
-        this.getCardInfo();
+        await this.getCardInfo();
         if (this.white) {
           this.loading = false;
         }
@@ -330,17 +330,22 @@ export default {
       const current = this.contracts[`MoonFund`];
       const contract = new Contract(current.abi, current.address, current.name);
       try {
-        await contract.call('whitelist', [this.index, this.account], { from: this.account }, function(err, res) {
-          if (!err) {
-            if (res != 0) {
-              that.white = true;
-              that.loading = false;
-            } else {
-              that.white = false;
-              that.loading = true;
+        if (this.card.isPrivate) {
+          await contract.call('whitelist', [this.index, this.account], { from: this.account }, function(err, res) {
+            if (!err) {
+              if (res != 0) {
+                that.white = true;
+                that.loading = false;
+              } else {
+                that.white = false;
+                that.loading = true;
+              }
             }
-          }
-        });
+          });
+        } else {
+          this.white = true;
+        }
+        
         if (that.white) {
           await contract.call('userPendingQuata', [this.index, this.account], { from: this.account }, function(
             err,

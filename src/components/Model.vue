@@ -9,7 +9,7 @@
   >
     <template>
       <span slot="title">
-        <h3 class="title">Depoist Fork Tokens</h3>
+        <h3 class="title">Depoist BNB to get FORK</h3>
       </span>
       <van-skeleton :row="3" class="m-skeleton" :loading="account == '' || skeletonLoading">
         <p class="over">

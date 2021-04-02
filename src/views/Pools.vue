@@ -48,9 +48,9 @@
             <span> <span class="public-icon"></span> <span>Private</span></span>
           </div>
           <el-button
-            :type="item.status == 2 || item.status == 0 ? 'info' : 'primary'"
+            :type="item.status == 2 ? 'info' : 'primary'"
             class="enter-btn"
-            :disabled="item.status == 2 || item.status == 0"
+            :disabled="item.status == 2"
             round
             @click="linkTo(index)"
             >Enter POOL</el-button
@@ -101,7 +101,7 @@
           <div class="flex">
             <div class="name">
               <img src="https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png" />
-              <span>Strategic funding</span>
+              <span>Private Sale</span>
             </div>
             <div>
               <span class="finshed">waiting</span>
@@ -177,7 +177,7 @@
           <div class="flex">
             <div class="name">
               <img src="https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png" />
-              <span>Rug pull victim Bonus</span>
+              <span>Rug pull victim</span>
             </div>
             <div>
               <span class="finshed">waiting</span>
