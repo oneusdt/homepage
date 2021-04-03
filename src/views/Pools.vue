@@ -45,7 +45,7 @@
           <span class="percent">{{ Math.floor((item.sold / item.cap) * 100) }}%</span>
           <div class="flex access">
             <span>Access Type</span>
-            <span> <span class="public-icon"></span> <span>Private</span></span>
+            <span> <span class="public-icon"></span> <span>{{item.isPrivate ? "Private" : "Public"}}</span></span>
           </div>
           <el-button
             :type="item.status == 2 ? 'info' : 'primary'"
@@ -166,7 +166,7 @@
             <span>Access Type</span>
             <span>
               <span class="public-icon"></span>
-              <span>Private</span>
+              <span>Public</span>
             </span>
           </div>
           <el-button type="info" :disabled="true" class="enter-btn" round>Enter POOL</el-button>
