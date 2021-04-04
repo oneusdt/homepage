@@ -45,14 +45,11 @@
           <span class="percent">{{ Math.floor((item.sold / item.cap) * 100) }}%</span>
           <div class="flex access">
             <span>Access Type</span>
-            <span> <span class="public-icon"></span> <span>{{item.isPrivate ? "Private" : "Public"}}</span></span>
+            <span>
+              <span class="public-icon"></span> <span>{{ item.isPrivate ? 'Private' : 'Public' }}</span></span
+            >
           </div>
-          <el-button
-            :type="item.status == 2 ? 'info' : 'primary'"
-            class="enter-btn"
-            :disabled="item.status == 2"
-            round
-            @click="linkTo(index)"
+          <el-button :type="item.status == 2 ? 'info' : 'primary'" class="enter-btn" round @click="linkTo(index)"
             >Enter POOL</el-button
           >
         </el-card>
@@ -314,6 +311,12 @@ export default {
           item.timestamp = (item.endTime - item.currentTime) * 1000;
           item.timestamp1 = 0;
           item.status = 1;
+        }
+        // sold == cap
+        if (item.cap == item.sold) {
+          item.timestamp = 0;
+          item.timestamp1 = 0;
+          item.status = 2;
         }
         return item;
       });

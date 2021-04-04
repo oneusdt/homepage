@@ -24,20 +24,22 @@
               <span :class="[{ start: card.status == 1, finshed: card.status == 2, waiting: card.status == 0 }]">{{
                 status[card.status]
               }}</span>
-              <Time
-                class="duration"
-                v-if="card.timestamp >= 1000"
-                :endTime="card.endTime * 1000"
-                :startTime="card.currentTime * 1000"
-                :changeTime="time => changeTime(time, 'start')"
-              />
-              <Time
-                class="duration"
-                v-if="card.timestamp1 >= 1000"
-                :endTime="card.startTime * 1000"
-                :startTime="card.currentTime * 1000"
-                :changeTime="time => changeTime(time, 'wait')"
-              />
+              <template v-if="card.status != 2">
+                <Time
+                  class="duration"
+                  v-if="card.timestamp >= 1000"
+                  :endTime="card.endTime * 1000"
+                  :startTime="card.currentTime * 1000"
+                  :changeTime="time => changeTime(time, 'start')"
+                />
+                <Time
+                  class="duration"
+                  v-if="card.timestamp1 >= 1000"
+                  :endTime="card.startTime * 1000"
+                  :startTime="card.currentTime * 1000"
+                  :changeTime="time => changeTime(time, 'wait')"
+                />
+              </template>
             </div>
             <div class="progress-title">Swap Progress</div>
             <el-progress
@@ -304,18 +306,10 @@ export default {
           obj.timestamp1 = 0;
           obj.status = 1;
         }
-
-        // if (obj.currentTime <= obj.startTime) {
-        //   obj.timestamp = (obj.startTime - obj.currentTime) * 1000;
-        //   obj.status = 0;
-        // } else if (obj.endTime <= obj.currentTime) {
-        //   obj.timestamp = 0;
-        //   obj.status = 2;
-        // } else {
-        //   obj.timestamp = (obj.endTime - obj.currentTime) * 1000;
-        //   obj.status = 1;
-        // }
         obj.utcString = new Date(obj.startTime * 1000).toUTCString();
+        if (obj.cap == obj.sold) {
+          obj.status = 2;
+        }
         this.card = obj;
         this.skeletonLoading = false;
       } catch {
@@ -345,7 +339,7 @@ export default {
         } else {
           this.white = true;
         }
-        
+
         if (that.white) {
           await contract.call('userPendingQuata', [this.index, this.account], { from: this.account }, function(
             err,

@@ -57,6 +57,7 @@ export default {
     return {
       val: '',
       total: 0,
+      pool_quota: 0,
       status: 1, //bnb dont need approve
       contracts,
       skeletonLoading: true,
@@ -115,8 +116,12 @@ export default {
     // getbalance user
     async getBalance() {
       try {
+        const current = this.contracts[`MoonFund`];
+        const contract = new Contract(current.abi, current.address, current.name);
         const res = await web3js.eth.getBalance(this.account);
+        const quota = await contract.call('pendingOfETH', this.index, { from: this.account });
         this.total = Number(web3js.utils.fromWei(res, 'ether'));
+        this.pool_quota = Number(web3js.utils.fromWei(quota, 'ether'));
         this.skeletonLoading = false;
       } catch (err) {
         this.skeletonLoading = true;
@@ -187,13 +192,13 @@ export default {
     },
     async approveFn(callback) {
       const p = 'ether',
-        quota = web3js.utils.toWei('1000000000000000000', p); //授权额度
+        quota = web3js.utils.toWei('1000000000000000000', p); //approve quota
       const item = this.contracts[this.tokenName];
       const target = this.contracts[`i${this.tokenName}`];
       const contract = new Contract(item.abi, item.address, item.name);
       return contract.approve(target.address, quota, { from: this.account }, function(err, res) {
         if (!err) {
-          console.log('授权成功');
+          console.log('approve success');
           callback(res);
         }
       });
@@ -256,8 +261,12 @@ export default {
         this.val = vals;
       }
     },
-    changMax() {
-      this.val = this.maxVal;
+    async changMax() {
+      if (this.maxVal <= this.pool_quota) {
+        this.val = this.maxVal;
+      } else {
+        this.val = this.pool_quota;
+      }
     },
     formatTimeStamp(ms) {
       let hours = parseInt(ms / (1000 * 60 * 60)),

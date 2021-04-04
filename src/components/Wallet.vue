@@ -121,7 +121,7 @@ export default {
       return this.$store.state.chainId;
     },
     chainIdStates() {
-      return this.$store.state.chainId == process.env.VUE_APP_NETWORK_ID || this.$store.state.chainId == process.env.VUE_APP_NETWORK_ID;
+      return this.$store.state.chainId == process.env.VUE_APP_NETWORK_ID;
     },
     wallet() {
       return this.$store.state.wallet;
@@ -129,12 +129,12 @@ export default {
   },
   watch: {
     account(v) {
-      if (this.chainId == process.env.VUE_APP_NETWORK_ID || this.chainId == process.env.VUE_APP_NETWORK_ID) {
+      if (this.chainId == process.env.VUE_APP_NETWORK_ID) {
         this.step = v ? 2 : 0;
       }
     },
     chainId(v) {
-      if (v == process.env.VUE_APP_NETWORK_ID || v == process.env.VUE_APP_NETWORK_ID) {
+      if (v == process.env.VUE_APP_NETWORK_ID) {
         this.step = this.account ? 2 : 0;
       }
     },
@@ -157,7 +157,6 @@ export default {
     },
     // 连接小狐狸
     async connctMetamask() {
-      console.log(1);
       var accounts = await connect();
       if (accounts == false) {
         this.connectError = true;
@@ -171,17 +170,17 @@ export default {
         if (chainId !== process.env.VUE_APP_NETWORK_ID && chainId !== process.env.VUE_APP_NETWORK_ID) {
           this.connectError = true;
           this.connectErrorMessage = `Unsupported chain id: ${chainId}. Supported chain ids are: 56,97.`;
-          console.log('连接成功将, chaid 错误');
+          console.log('connetc chaid error');
           return false;
         }
         this.$store.dispatch('changeWallet', this.currentWallet);
         this.close && this.close();
         this.connectError = false;
-        console.log('连接成功将要关闭弹窗');
+        console.log('connect success');
       } else {
         this.connectError = true;
         this.connectErrorMessage = 'The user rejected the request';
-        console.log('连接失败');
+        console.log('connect error');
       }
     },
     // 选择那个钱包
