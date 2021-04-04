@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Roadmap1</h2>
+    <h2>Roadmap</h2>
     <div class="main-time-line">
       <div class="timeline-start" />
       <div class="conference-center-line"></div>
