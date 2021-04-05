@@ -17,7 +17,7 @@
       <div class="box" v-show="activeIndex == 0">
         <div class="text">
           <div class="title">{{ menu[0] }}</div>
-          <div>Total supply : 188,000,000 $FROK</div>
+          <div>Total supply : 18,800,000 $FROK</div>
           <div>4% To the moon Found (0.752 millions)</div>
           <div>10% Development found (1.88 millions)</div>
           <div>4% Warchest (0.8 millions)</div>
