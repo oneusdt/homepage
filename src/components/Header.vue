@@ -1,6 +1,6 @@
 <!--
  * @Author: lenghui
- * @Description: 公共头 分为四类
+ * @Description: 
 -->
 <template>
   <div>
@@ -19,7 +19,7 @@
             <a href="#roadmap"><li class="menu-item">Roadmap</li></a>
             <a href="#tokenomics"><li class="menu-item">Tokenomics</li></a>
             <a href="https://docs.fork-finance.org/" target="_blank"><li class="menu-item">Document</li></a>
-            <a href="#join"><li class="menu-item">Join us</li></a>
+            <a :href="launchAppUrl"><li class="menu-item">Launch App</li></a>
           </ul>
         </div>
         <div v-if="path !== '/'">
@@ -55,6 +55,7 @@ export default {
       drawerVisable: false,
       netError: false, // 不管用户是否登录 如果节点不匹配 不显示出用户名
       accounts: '',
+      launchAppUrl: process.env.VUE_APP_LAUNCH_APP_URL,
     };
   },
   async created() {

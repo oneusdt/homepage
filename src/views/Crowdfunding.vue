@@ -120,7 +120,7 @@
               </tr>
               <tr>
                 <td>
-                  <p><span>Allocation(Min)-Allocation(Max)</span><span>0-5 BNB</span></p>
+                  <p><span>Allocation(Min)-Allocation(Max)</span><span>{{ card.allocationMin }}-{{ card.allocationMax }} BNB</span></p>
                 </td>
               </tr>
               <tr>
@@ -187,7 +187,7 @@
     </div>
     <div class="not-found" v-else>
       <img :src="notfound" />
-      <p>你似乎来到了没有知识存在的荒原</p>
+      <p>You seem to have come to a wasteland where there is no knowledge</p>
     </div>
   </div>
 </template>
@@ -289,6 +289,8 @@ export default {
           if (!err) {
             res.cap = web3js.utils.fromWei(res.cap, 'ether');
             res.sold = web3js.utils.fromWei(res.sold, 'ether');
+            res.allocationMin = web3js.utils.fromWei(res.allocationMin, 'ether');
+            res.allocationMax = web3js.utils.fromWei(res.allocationMax, 'ether');
             obj = res;
           }
         });

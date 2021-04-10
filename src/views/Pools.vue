@@ -98,7 +98,7 @@
           <div class="flex">
             <div class="name">
               <img src="https://i.loli.net/2021/03/31/4nPEu79sLRGcMTK.png" />
-              <span>Private Sale</span>
+              <span>Whitelisted Sale</span>
             </div>
             <div>
               <span class="finshed">waiting</span>
