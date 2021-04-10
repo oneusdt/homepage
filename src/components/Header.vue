@@ -19,7 +19,9 @@
             <a href="#roadmap"><li class="menu-item">Roadmap</li></a>
             <a href="#tokenomics"><li class="menu-item">Tokenomics</li></a>
             <a href="https://docs.fork-finance.org/" target="_blank"><li class="menu-item">Document</li></a>
-            <a :href="launchAppUrl"><li class="menu-item">Launch App</li></a>
+            <a :href="launchAppUrl"
+              ><li class="menu-item bold">Launch App <span class="point point-flicker"></span></li
+            ></a>
           </ul>
         </div>
         <div v-if="path !== '/'">
@@ -182,10 +184,17 @@ export default {
     font-size: 16px;
     color: #17adff;
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   a:first-child li {
     margin-left: 0;
   }
+}
+.bold {
+  font-weight: bold;
+  position: relative;
 }
 @media (max-width: 992px) {
   .header {
@@ -200,6 +209,55 @@ export default {
     }
   }
 }
+
+.point {
+  width: 10px;
+  height: 10px;
+  background-color: #03d40c;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: -10px;
+}
+
+.point-flicker:after {
+  background-color: #03d40c;
+}
+
+.point-flicker:before {
+  background-color: rgba(0, 168, 253, 0.1);
+}
+
+.point-flicker:before,
+.point-flicker:after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -7px;
+  margin-top: -7px;
+  border-radius: 50%;
+  animation: warn 1s ease-out 0s infinite;
+}
+
+@keyframes warn {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.8,
+  }
+
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .header .header-left a {
     font-size: 20px;
