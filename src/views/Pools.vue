@@ -109,8 +109,8 @@
             <span>Total funds will be raised</span>
           </div>
           <div class="flex price">
-            <span>1BNB=376FORK</span>
-            <span>1000BNB</span>
+            <span>1BNB=752FORK</span>
+            <span>500BNB</span>
           </div>
           <div class="progress-title">Progress</div>
           <el-progress
@@ -174,7 +174,7 @@
           <div class="flex">
             <div class="name">
               <img src="https://i.loli.net/2021/03/31/pxon951AeVgfJIk.png" />
-              <span>Rug pull victim</span>
+              <span>Social Network Offering</span>
             </div>
             <div>
               <span class="finshed">waiting</span>
